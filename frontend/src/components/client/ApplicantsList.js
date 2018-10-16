@@ -5,9 +5,10 @@ import Applicant from './Applicant'
 
 
 const ApplicantsList = ({selectedJob}) => {
+  console.log(selectedJob);
   return (
     <div className='ApplicantsList'>
-      {selectedJob.applicants.map(applicant => (
+      {selectedJob.job_profiles.map(applicant => (
         <Applicant key={applicant.id} applicant={applicant} />
       ))}
     </div>

@@ -9,9 +9,9 @@ const JobDisplay = ({selectedJob}) => {
     <div className='JobDisplay'>
       <h5>Req Status: {selectedJob.job_status.status}</h5>
       <h5>Job Position: {selectedJob.position}</h5>
-      <h5>Company: {selectedJob.employer.company_name}</h5>
-      <h5>{selectedJob.employer.email}</h5>
-      <h5>{selectedJob.employer.phone}</h5>
+      <h5>Company: {selectedJob.company_name}</h5>
+      <h5>{selectedJob.user.email}</h5>
+      <h5>{selectedJob.phone}</h5>
 
       <ul>Candidates:</ul>
       <ApplicantsList />

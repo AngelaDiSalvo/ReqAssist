@@ -4,10 +4,10 @@ import Job from './Job'
 
 
 
-const JobList = (props) => {
+const JobList = ({jobs}) => {
   return (
     <div className='JobList'>
-      {props.jobs.map(job => (
+      {jobs.map(job => (
         <Job key={job.id} job={job} />
       ))}
     </div>

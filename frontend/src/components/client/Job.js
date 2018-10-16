@@ -2,9 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const Job = ({job, selectJob}) => {
+
   return (
     <div className='Job'>
-      <li onClick={() => selectJob(job)}>{job.id}: {job.position}, {job.employer.company_name}</li>
+      <li onClick={() => selectJob(job)}>{job.id}: {job.position}, {job.company_name}</li>
     </div>
   )
 }

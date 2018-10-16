@@ -7,21 +7,21 @@ import React from 'react'
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
               <form className="form-inline my-2 my-lg-0" onSubmit={this.props.handleSubmit}>
                 Age: <select className="form-control form-control" onChange={this.props.handleAgeChange}>
-                  <option selected value="any">Any</option>
+                  <option value="any">Any</option>
                   <option value="puppy">Puppy</option>
                   <option value="young">Young</option>
                   <option value="adult">Adult</option>
                   <option value="senior">Senior</option>
                 </select>
                 Size: <select className="form-control form-control" onChange={this.props.handleSizeChange}>
-                  <option selected value="any">Any</option>
+                  <option value="any">Any</option>
                   <option value="small">Small</option>
                   <option value="medium">Medium</option>
                   <option value="large">Large</option>
                   <option value="xl">XL</option>
                 </select>
                 Gender: <select className="form-control form-control" onChange={this.props.handleGenderChange}>
-                  <option selected value="any">Any</option>
+                  <option value="any">Any</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>

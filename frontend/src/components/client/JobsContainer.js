@@ -8,7 +8,6 @@ class JobsContainer extends React.Component {
 
   componentDidMount(){
     this.props.fetchJobs();
-    console.log(this.props);
   }
 
   render() {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_195420) do
+ActiveRecord::Schema.define(version: 2018_10_12_203756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,28 +36,44 @@ ActiveRecord::Schema.define(version: 2018_10_10_195420) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "job_apps", force: :cascade do |t|
-    t.bigint "job_profile_id"
-    t.bigint "job_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["job_id"], name: "index_job_apps_on_job_id"
-    t.index ["job_profile_id"], name: "index_job_apps_on_job_profile_id"
-  end
-
-  create_table "job_profiles", force: :cascade do |t|
+  create_table "applicants", force: :cascade do |t|
     t.string "name"
     t.string "phone"
+    t.string "email"
+    t.string "password_digest"
     t.integer "home_zip"
     t.integer "travel_radius"
     t.string "position_type"
     t.float "experience"
     t.integer "min_wage_rate"
     t.string "language"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_job_profiles_on_user_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "employers", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.string "company_name"
+    t.string "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "job_apps", force: :cascade do |t|
+    t.bigint "applicant_id"
+    t.bigint "job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_job_apps_on_applicant_id"
+    t.index ["job_id"], name: "index_job_apps_on_job_id"
   end
 
   create_table "job_statuses", force: :cascade do |t|
@@ -67,14 +83,11 @@ ActiveRecord::Schema.define(version: 2018_10_10_195420) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.string "company_name"
-    t.string "phone"
     t.string "position"
-    t.string "position_description"
     t.integer "job_zip"
     t.text "requirements"
     t.text "comments"
-    t.integer "employer_id"
+    t.bigint "employer_id"
     t.bigint "job_status_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -82,16 +95,8 @@ ActiveRecord::Schema.define(version: 2018_10_10_195420) do
     t.index ["job_status_id"], name: "index_jobs_on_job_status_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "password_digest"
-    t.string "user_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_foreign_key "job_apps", "job_profiles"
+  add_foreign_key "job_apps", "applicants"
   add_foreign_key "job_apps", "jobs"
-  add_foreign_key "job_profiles", "users"
+  add_foreign_key "jobs", "employers"
   add_foreign_key "jobs", "job_statuses"
 end

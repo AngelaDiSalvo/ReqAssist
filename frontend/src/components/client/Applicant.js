@@ -11,7 +11,7 @@ const Applicant = ({applicant, selectApplicant}) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectApplicant: (applicant) => dispatch({type: "SELECT_APPLICANT", payload: applicant})
+
   }
 }
 
