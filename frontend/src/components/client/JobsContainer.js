@@ -1,6 +1,8 @@
 import React from 'react'
 import JobList from './JobList'
 import JobDisplay from './JobDisplay'
+import AllPossibleApplicantsList from './AllPossibleApplicantsList'
+
 import { connect } from 'react-redux'
 
 
@@ -13,8 +15,10 @@ class JobsContainer extends React.Component {
   render() {
     return (
       <div className='container'>
-        <JobList />
-        {this.props.selectedJob ? <JobDisplay /> : <h3>Please select a job</h3>}
+        <div>All Jobs
+        <JobList /></div>
+        {this.props.selectedJob ? <div>Selected Job<JobDisplay /></div> : <h3>Please select a job</h3>}
+        <AllPossibleApplicantsList />
       </div>
     )
   }

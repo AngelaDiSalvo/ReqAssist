@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Job from './Job'
 
 
-
 const JobList = ({jobs}) => {
   return (
     <div className='JobList'>
@@ -13,7 +12,6 @@ const JobList = ({jobs}) => {
     </div>
   )
 }
-
 
 
 function mapStateToProps(state) {

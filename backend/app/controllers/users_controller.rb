@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  # skip_before_action :check_authentication, only: [:create]
 
   def index
     users = User.all
@@ -15,21 +16,27 @@ class UsersController < ApplicationController
 
     if user.valid?
       user.save
-      render json: user
+      render json: {
+        user: user,
+        token: encode_token({ user_id: user.id }) }
     else
       render json: user.errors
     end
   end
 
-  def update
-    if user.valid?
-      user.update(user_params)
-      render json: user
-    else
-      render json: user.errors
-    end
-
+  def profile
+    render json: current_user
   end
+
+  # def update
+  #   if user.valid?
+  #     user.update(user_params)
+  #     render json: user
+  #   else
+  #     render json: user.errors
+  #   end
+  #
+  # end
 
 
   private

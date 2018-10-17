@@ -15,6 +15,7 @@ class JobProfilesController < ApplicationController
 
     if job_profile.valid?
       job_profile.save
+
       render json: job_profile
     else
       render json: job_profile.errors
@@ -28,7 +29,7 @@ class JobProfilesController < ApplicationController
   private
 
   def job_profile_params
-    params.require(:job_profile).permit(:name, :phone, :email, :password, :home_zip, :travel_radius, :position_type, :experience, :language)
+    params.require(:job_profile).permit(:user_id, :name, :phone, :home_zip, :travel_radius, :position_type, :experience, :min_wage_rate)
   end
 
 end

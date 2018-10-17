@@ -10,7 +10,6 @@ class ApplicantContainer extends React.Component{
   }
 
   render() {
-    console.log(this.props);
     if (this.props.isLoaded) {
       if (this.props.applicantProfile.job_profiles[0] == null) {
         return (

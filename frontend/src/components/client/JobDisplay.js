@@ -4,7 +4,6 @@ import ApplicantsList from './ApplicantsList'
 
 
 const JobDisplay = ({selectedJob}) => {
-  console.log(selectedJob);
   return (
     <div className='JobDisplay'>
       <h5>Req Status: {selectedJob.job_status.status}</h5>

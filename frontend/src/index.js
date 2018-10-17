@@ -6,10 +6,9 @@ import Adapter from './Adapter'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker';
+import {BrowserRouter} from 'react-router-dom';
 
 const JOBS_URL = 'http://localhost:3001/jobs'
-// const EMPLOYERS_URL = 'http://localhost:3001/employers'
-// const JOB_APPS_URL = 'http://localhost:3001/job_apps'
 const APPLICANTS_URL = 'http://localhost:3001/users'
 
 
@@ -18,7 +17,7 @@ const reducer = function(currentState, action = {}){
   let newState = { ...currentState }
   switch(type){
     case 'FETCH_JOBS':
-      fetch(JOBS_URL).then( response => response.json() )
+      fetch(JOBS_URL).then( response => response.json() ).then(console.log())
         .then( jobs =>  {
           store.dispatch({
             type: 'RECIEVE_JOBS',
@@ -37,6 +36,7 @@ const reducer = function(currentState, action = {}){
     break;
     case "SET_USER":
       newState.user = payload
+      console.log(payload);
       if (localStorage.token !== "undefined") {
         newState.isLoggedIn = true
       }
@@ -67,6 +67,14 @@ const reducer = function(currentState, action = {}){
       newState.applicantProfile = payload.user
       newState.isLoaded = true
     break
+    case 'STORE_POSTED_JOBS':
+      newState.postedJobs = payload.user.posted_jobs
+      newState.isLoaded = true
+    break
+    case 'STORE_ALL_APPLICANTS':
+      newState.all_applicants = payload
+      newState.isLoaded = true
+    break
   }
   return newState
 }
@@ -77,17 +85,25 @@ const store = createStore(
       jobs: [],
       selectedJob: null,
       selectedApplicant: null,
-      user: {id: 120, email: "ake52@example.com", user_type: "applicant"},
+      user: null,
+      // user: {id: 122, email: "abd@123.com", user_type: "applicant"},
+      // user: {id: 111, email: "angela@example.com", user_type: "employer"},
+      // user: {id: 111, email: "angela@example.com", user_type: "client"},
       applicantProfile: null,
-      isLoggedIn: true,
+      postedJobs: null,
+      isLoggedIn: false,
       toggleSignUp: false,
       toggleLogin: false,
       isLoaded: false,
-    },
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      all_applicants: null,
+    }
 )
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render((
+  <Provider store={store}>
+    <App />
+  </Provider>
+  ), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

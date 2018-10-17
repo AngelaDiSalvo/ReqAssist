@@ -1,41 +1,121 @@
-import React from 'react'
-// note: need to add is-valid-zip validation here. https://medium.com/@gaperton/react-forms-with-value-links-part-2-validation-9d1ba78f8e49
-  class Navbar extends React.Component {
-    render() {
-      return (
-        <div className='Navbar'>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <form className="form-inline my-2 my-lg-0" onSubmit={this.props.handleSubmit}>
-                Age: <select className="form-control form-control" onChange={this.props.handleAgeChange}>
-                  <option value="any">Any</option>
-                  <option value="puppy">Puppy</option>
-                  <option value="young">Young</option>
-                  <option value="adult">Adult</option>
-                  <option value="senior">Senior</option>
-                </select>
-                Size: <select className="form-control form-control" onChange={this.props.handleSizeChange}>
-                  <option value="any">Any</option>
-                  <option value="small">Small</option>
-                  <option value="medium">Medium</option>
-                  <option value="large">Large</option>
-                  <option value="xl">XL</option>
-                </select>
-                Gender: <select className="form-control form-control" onChange={this.props.handleGenderChange}>
-                  <option value="any">Any</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-                Enter Zip: <input className="form-control form-control" onChange={this.props.handleZipChange}/>
-                <input type="submit" value="Submit" />
-              </form>
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+
+import { connect } from 'react-redux'
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+};
+
+class MenuAppBar extends React.Component {
+  state = {
+    auth: true,
+    anchorEl: null,
+  };
+
+  handleChange = event => {
+    localStorage.token = ''
+    this.setState({ auth: event.target.checked });
+    window.location.reload()
+  };
+
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { auth, anchorEl } = this.state;
+    const open = Boolean(anchorEl);
+
+    return (
+      <div className={classes.root}>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
+            }
+            label={auth ? 'Logout' : 'Login'}
+          />
+        </FormGroup>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+              {this.props.user.email}
+            </Typography>
+            {auth && (
               <div>
-                <button className="btn btn-secondary btn-lg" onClick={this.props.showSavedDogs}>Toggle Saved Dogs</button>
+                <IconButton
+                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleMenu}
+                  color="inherit"
+                >
+                  {this.props.user.user_type}
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                </Menu>
               </div>
-
-          </nav>
-        </div>
-      )
-    }
+            )}
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
   }
+}
 
-export default Navbar;
+MenuAppBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(MenuAppBar));

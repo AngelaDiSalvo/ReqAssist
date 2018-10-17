@@ -21,4 +21,8 @@ class JobAppsController < ApplicationController
     end
   end
 
+  def destroy
+    job_app.destroy
+  end
+
 end

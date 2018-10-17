@@ -25,6 +25,7 @@ const Signup = (props) => {
 function mapDispatchToProps(dispatch) {
   return {
     submitCredentials: (e) => {
+      e.preventDefault()
       if (e.target[2].value === e.target[3].value) {
         const payload = {
           user_type: e.target[0].value,
@@ -33,9 +34,9 @@ function mapDispatchToProps(dispatch) {
         }
         dispatch({ type: 'SUBMIT_CREDENTIALS', payload})
       } else {
-        e.preventDefault();
         alert("Error: password must match");
       }
+      window.location.reload()
     }
   }
 }

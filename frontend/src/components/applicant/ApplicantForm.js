@@ -1,39 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Adapter from '../../Adapter'
 
 class ApplicantForm extends React.Component {
 
   handleSubmit = (e) => {
-    e.preventDefault()
-    const PROFS_URL = 'http://localhost:3001/job_profiles'
-    const PROFILE_URL = PROFS_URL + `/${this.props.user.id}`
     const position_types = []
     for (var i = 5; i < 22; i++) {
       if (e.target[i].checked) {
         position_types.push(e.target[i].value)
       }
     }
-    const payload = [{
-      id: this.props.user.id,
+
+    Adapter.createNewJobProfile({
+      user_id: this.props.user.id,
       name: e.target[0].value,
       phone: e.target[1].value,
       home_zip: e.target[2].value,
       travel_radius: e.target[3].value,
       experience: e.target[4].value,
-      position_type: position_types,
-      min_wage_rate: e.target[6].value,
-    }]
-    fetch(PROFS_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer"
-      },
-      body: JSON.stringify({
-        payload: payload
-      })
+      min_wage_rate: e.target[5].value,
+      // position_type: position_types,
     })
-      .then(this.props.saveProfile(payload))
+
   }
 
   render() {
@@ -55,6 +44,7 @@ class ApplicantForm extends React.Component {
             <option value="2">1-2 years</option>
             <option value="3">2-3 years</option>
           </select> <br />
+          Minimum acceptable hourly wage: $<input /> <br />
           Job Type: (select all that apply) <div>
             <input id="1" type="checkbox" value="construction" /><label for="construction">construction</label>
             <input id="2" type="checkbox" value="electrician" /><label for="electrician">electrician</label>
@@ -73,8 +63,9 @@ class ApplicantForm extends React.Component {
             <input id="15" type="checkbox" value="mechanic" /><label for="mechanic">mechanic</label>
             <input id="16" type="checkbox" value="maintenance" /><label for="maintenance">maintenance</label>
             <input id="17" type="checkbox" value="recycling" /><label for="recycling">recycling</label>
-          </div>
           <br />
+
+          </div>
           Please upload a 15-30 second video for consideration: <input /> <br />
           <input type="submit" value="Submit" />
         </form>

@@ -7,12 +7,12 @@ class JobsController < ApplicationController
 
   def show
     job = Job.find(params[:id])
+    byebug
     render json: job
   end
 
   def create
     job = Job.new(job_params)
-
     if job.valid?
       job.save
       render json: job
@@ -28,7 +28,7 @@ class JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:position, :job_zip, :requirements, :comments, :employer_id, :job_status_id)
+    params.require(:job).permit(:company_name, :phone, :position, :position_description, :job_zip, :requirements, :comments, :employer_id, :job_status_id)
   end
 
 end
