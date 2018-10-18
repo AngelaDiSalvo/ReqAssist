@@ -19,7 +19,7 @@ end
     phone: Faker::Number.number(10),
     home_zip: 77027,
     travel_radius: 15,
-    position_type: "construction",
+    position_type: ["construction", "plumbing"],
     experience: Faker::Number.between(0,10),
     min_wage_rate: Faker::Number.between(10,50),
     language: "español",
@@ -58,7 +58,7 @@ end
 
 User.create(
   email: 'angela@example.com',
-  password: "password",
+  password: "asdf",
   user_type: "client"
 )
 

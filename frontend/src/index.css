@@ -19,6 +19,16 @@ code {
 }
 
 .container div {
-  width: 40vw;
+  width: 30vw;
+  margin: 0 10px;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: row;
+}
+
+.container2 div {
+  width: 60vw;
   margin: 0 10px;
 }

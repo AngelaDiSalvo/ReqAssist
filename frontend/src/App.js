@@ -38,6 +38,7 @@ class App extends Component {
           <Navbar />
           <div className="App-intro">
             <JobsContainer />
+            <AllPossibleApplicantsList />
           </div>
         </div>
       )

@@ -79,7 +79,7 @@ class MenuAppBar extends React.Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  {this.props.user.user_type}
+                  {this.props.user.user_type === "client" ? "admin" : this.props.user.user_type}
                   <AccountCircle />
                 </IconButton>
                 <Menu

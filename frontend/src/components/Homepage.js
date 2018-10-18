@@ -1,7 +1,7 @@
 import React from 'react'
 import Signup from "./Signup"
 import Login from "./Login"
-import '../css/homepage.css';
+// import '../css/homepage.css';
 import { connect } from 'react-redux'
 import {Route, Switch, NavLink, Redirect, withRouter} from 'react-router-dom';
 
@@ -34,7 +34,7 @@ const Homepage = (props) => {
 }
 
 
-function mapStateToProps(state) { 
+function mapStateToProps(state) {
   return {
     isLoggedIn: state.isLoggedIn,
     toggleSignUp: state.toggleSignUp,

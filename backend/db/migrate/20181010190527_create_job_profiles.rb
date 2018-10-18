@@ -9,6 +9,7 @@ class CreateJobProfiles < ActiveRecord::Migration[5.2]
       t.float :experience
       t.integer :min_wage_rate
       t.string :language
+      t.integer :score
       t.belongs_to :user, foreign_key: true
 
       t.timestamps

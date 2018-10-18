@@ -5,7 +5,6 @@ import AllPossibleApplicantsList from './AllPossibleApplicantsList'
 
 import { connect } from 'react-redux'
 
-
 class JobsContainer extends React.Component {
 
   componentDidMount(){
@@ -15,10 +14,10 @@ class JobsContainer extends React.Component {
   render() {
     return (
       <div className='container'>
-        <div>All Jobs
+        <div>
         <JobList /></div>
-        {this.props.selectedJob ? <div>Selected Job<JobDisplay /></div> : <h3>Please select a job</h3>}
-        <AllPossibleApplicantsList />
+        {this.props.selectedJob ? <div className='container2'><JobDisplay /></div> : <div>Selected Job</div>}
+
       </div>
     )
   }

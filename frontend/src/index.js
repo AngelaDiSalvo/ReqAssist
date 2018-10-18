@@ -17,7 +17,7 @@ const reducer = function(currentState, action = {}){
   let newState = { ...currentState }
   switch(type){
     case 'FETCH_JOBS':
-      fetch(JOBS_URL).then( response => response.json() ).then(console.log())
+      fetch(JOBS_URL).then( response => response.json() )
         .then( jobs =>  {
           store.dispatch({
             type: 'RECIEVE_JOBS',
@@ -36,7 +36,6 @@ const reducer = function(currentState, action = {}){
     break;
     case "SET_USER":
       newState.user = payload
-      console.log(payload);
       if (localStorage.token !== "undefined") {
         newState.isLoggedIn = true
       }

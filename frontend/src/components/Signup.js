@@ -1,6 +1,4 @@
 import React from 'react'
-// note: add password and password2 check here
-import '../css/homepage.css';
 import { connect } from 'react-redux'
 
 
