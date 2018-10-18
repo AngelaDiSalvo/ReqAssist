@@ -74,6 +74,9 @@ const reducer = function(currentState, action = {}){
       newState.all_applicants = payload
       newState.isLoaded = true
     break
+    case 'STORE_SELECTED_APPLICANTS':
+      console.log(currentState);
+    break
   }
   return newState
 }

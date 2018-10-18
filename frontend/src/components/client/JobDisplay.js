@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ApplicantsList from './ApplicantsList'
+// import ApplicantsList from './ApplicantsList'
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -56,19 +56,21 @@ const JobDisplay = (props) => {
           <TableRow>
             <TableCell>Applicant Id</TableCell>
             <TableCell>Name</TableCell>
+            <TableCell>Score</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>Applicant Id</TableCell>
-            <TableCell>Name</TableCell>
-          </TableRow>
+          {props.selectedJob.job_profiles.map(applicant => {
+            return (
+              <TableRow key={applicant.id} onClick={() => props.selectApplicant(applicant)}>
+                <TableCell>{applicant.id}</TableCell>
+                <TableCell>{applicant.name}</TableCell>
+                <TableCell>{applicant.score}</TableCell>
+              </TableRow>
+            )})}
         </TableBody>
       </Table>
-      <ApplicantsList />
     </Paper>
-
-
   )
 }
 
@@ -79,8 +81,14 @@ function mapStateToProps(state) {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    selectApplicant: (app) => dispatch({ type: 'GET_APPLICANT_DATA', payload: app} )
+  }
+}
+
 JobDisplay.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(JobDisplay))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(JobDisplay))

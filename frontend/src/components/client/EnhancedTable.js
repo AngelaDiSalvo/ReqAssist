@@ -1,7 +1,4 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import Adapter from '../../Adapter'
-
+import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,16 +14,15 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
-import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
-
-function createData(id, name, score, home_zip, travel_radius, position_type, experience, min_wage_rate) {
-  return { id, name, score, home_zip, travel_radius, position_type, experience, min_wage_rate };
+let counter = 0;
+function createData(name, calories, fat, carbs, protein) {
+  counter += 1;
+  return { id: counter, name, calories, fat, carbs, protein };
 }
 
 function desc(a, b, orderBy) {
@@ -54,14 +50,11 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'id', numeric: false, disablePadding: true, label: 'id' },
-  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
-  { id: 'score', numeric: true, disablePadding: false, label: 'Score' },
-  { id: 'home zip', numeric: true, disablePadding: false, label: 'Home Zip' },
-  { id: 'travel distance', numeric: true, disablePadding: false, label: 'Travel Distance' },
-  { id: 'position type', numeric: true, disablePadding: false, label: 'Position Type' },
-  { id: 'experience', numeric: true, disablePadding: false, label: 'Experience' },
-  { id: 'rate per hour', numeric: true, disablePadding: false, label: 'Hourly Rate' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
+  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
+  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
+  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
+  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -146,9 +139,8 @@ const toolbarStyles = theme => ({
   },
 });
 
-
 let EnhancedTableToolbar = props => {
-  const { selected, numSelected, classes } = props;
+  const { numSelected, classes } = props;
 
   return (
     <Toolbar
@@ -163,17 +155,17 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            All Applicants
+            Nutrition
           </Typography>
         )}
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
         {numSelected > 0 ? (
-          <Tooltip title="Add">
-            <Button aria-label="Add">
-              <AddIcon onClick={() => props.addNewJobApps(selected.sort())}/>
-            </Button>
+          <Tooltip title="Delete">
+            <IconButton aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
           </Tooltip>
         ) : (
           <Tooltip title="Filter list">
@@ -190,7 +182,6 @@ let EnhancedTableToolbar = props => {
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
-  selected: PropTypes.object.isRequired,
 };
 
 EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
@@ -208,21 +199,29 @@ const styles = theme => ({
   },
 });
 
-class AllPossibleApplicantsList extends React.Component {
+class EnhancedTable extends React.Component {
   state = {
     order: 'asc',
-    orderBy: 'id',
+    orderBy: 'calories',
     selected: [],
+    data: [
+      createData('Cupcake', 305, 3.7, 67, 4.3),
+      createData('Donut', 452, 25.0, 51, 4.9),
+      createData('Eclair', 262, 16.0, 24, 6.0),
+      createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+      createData('Gingerbread', 356, 16.0, 49, 3.9),
+      createData('Honeycomb', 408, 3.2, 87, 6.5),
+      createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+      createData('Jelly Bean', 375, 0.0, 94, 0.0),
+      createData('KitKat', 518, 26.0, 65, 7.0),
+      createData('Lollipop', 392, 0.2, 98, 0.0),
+      createData('Marshmallow', 318, 0, 81, 2.0),
+      createData('Nougat', 360, 19.0, 9, 37.0),
+      createData('Oreo', 437, 18.0, 63, 4.0),
+    ],
     page: 0,
     rowsPerPage: 5,
   };
-
-  componentDidMount(){
-    fetch('http://localhost:3001/job_profiles')
-    .then(r => r.json())
-    .then(this.props.storeApplicants)
-  }
-
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -237,11 +236,10 @@ class AllPossibleApplicantsList extends React.Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: this.props.all_applicants.map(n => n.id) }));
+      this.setState(state => ({ selected: state.data.map(n => n.id) }));
       return;
     }
     this.setState({ selected: [] });
-
   };
 
   handleClick = (event, id) => {
@@ -276,103 +274,80 @@ class AllPossibleApplicantsList extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    if (this.props.isLoaded) {
-      const { order, orderBy, selected, rowsPerPage, page } = this.state;
-      const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.all_applicants.length - page * rowsPerPage);
-      return (
-        <Paper className={this.props.classes.root}>
-          <EnhancedTableToolbar numSelected={selected.length} selected={selected} addNewJobApps={this.props.addNewJobApps}/>
-          <div className={this.props.classes.tableWrapper}>
-            <Table className={this.props.classes.table} aria-labelledby="tableTitle">
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={this.handleSelectAllClick}
-                onRequestSort={this.handleRequestSort}
-                rowCount={this.props.all_applicants.length}
-              />
-              <TableBody>
-                {stableSort(this.props.all_applicants, getSorting(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(n => {
-                    const isSelected = this.isSelected(n.id);
-                    return (
-                      <TableRow
-                        hover
-                        onClick={event => this.handleClick(event, n.id)}
-                        role="checkbox"
-                        aria-checked={isSelected}
-                        tabIndex={-1}
-                        key={n.id}
-                        selected={isSelected}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isSelected} />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
-                          {n.id}
-                        </TableCell>
-                        <TableCell numeric>{n.name}</TableCell>
-                        <TableCell numeric>{n.score}</TableCell>
-                        <TableCell numeric>{n.home_zip}</TableCell>
-                        <TableCell numeric>{n.travel_radius}</TableCell>
-                        <TableCell numeric>{n.position_type}</TableCell>
-                        <TableCell numeric>{n.experience}</TableCell>
-                        <TableCell numeric>{n.min_wage_rate}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 49 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <TablePagination
-            component="div"
-            count={this.props.all_applicants.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            backIconButtonProps={{
-              'aria-label': 'Previous Page',
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page',
-            }}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-          />
-        </Paper>
-      );
-    } else {
-      return <div>Loading...</div>
-    }
+    const { classes } = this.props;
+    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+
+    return (
+      <Paper className={classes.root}>
+        <EnhancedTableToolbar numSelected={selected.length} />
+        <div className={classes.tableWrapper}>
+          <Table className={classes.table} aria-labelledby="tableTitle">
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={this.handleSelectAllClick}
+              onRequestSort={this.handleRequestSort}
+              rowCount={data.length}
+            />
+            <TableBody>
+              {stableSort(data, getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(n => {
+                  const isSelected = this.isSelected(n.id);
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => this.handleClick(event, n.id)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      key={n.id}
+                      selected={isSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox checked={isSelected} />
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.name}
+                      </TableCell>
+                      <TableCell numeric>{n.calories}</TableCell>
+                      <TableCell numeric>{n.fat}</TableCell>
+                      <TableCell numeric>{n.carbs}</TableCell>
+                      <TableCell numeric>{n.protein}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <TablePagination
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
+      </Paper>
+    );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    all_applicants: state.all_applicants,
-    isLoaded: state.isLoaded,
-    selectedJob: state.selectedJob,
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    storeApplicants: (app) => dispatch( { type: 'STORE_ALL_APPLICANTS', payload: app} ),
-    addNewJobApps: (selected) => {
-      dispatch( {type: 'STORE_SELECTED_APPLICANTS', payload: selected} )},
-  }
-}
-
-AllPossibleApplicantsList.propTypes = {
+EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AllPossibleApplicantsList))
-
-//
+export default withStyles(styles)(EnhancedTable);

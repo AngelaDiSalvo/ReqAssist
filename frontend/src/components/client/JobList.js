@@ -29,6 +29,7 @@ const styles = theme => ({
   },
   table: {
     minWidth: 100,
+    maxHeight: 100,
   },
 });
 
