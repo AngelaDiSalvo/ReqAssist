@@ -12,10 +12,10 @@ class JobAppsController < ApplicationController
 
   def create
     job_app = JobApp.new(job_app_params)
-
     if job_app.valid?
       job_app.save
-      render json: job_app
+      job = Job.find(job_app.job_id)
+      render json: job
     else
       render json: job_app.errors
     end
@@ -25,4 +25,10 @@ class JobAppsController < ApplicationController
     job_app.destroy
   end
 
+end
+
+private
+
+def job_app_params
+  params.require(:job_app).permit(:job_profile_id, :job_id)
 end

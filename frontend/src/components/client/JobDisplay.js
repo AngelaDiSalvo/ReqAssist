@@ -29,20 +29,25 @@ const JobDisplay = (props) => {
       <Table className={props.classes.table}>
         <TableHead>
           <TableRow>
-            Selected Job Details
-          </TableRow>
-          <TableRow>
-            <TableCell>Job Id</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Phone</TableCell>
+            <TableCell>Job Details</TableCell>
+            <TableCell> </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
+            <TableCell>Job Id:</TableCell>
             <TableCell>{props.selectedJob.id}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Status:</TableCell>
             <TableCell>{props.selectedJob.job_status.status}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Email:</TableCell>
             <TableCell>{props.selectedJob.user.email}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Phone:</TableCell>
             <TableCell>{props.selectedJob.phone}</TableCell>
           </TableRow>
         </TableBody>
@@ -51,7 +56,9 @@ const JobDisplay = (props) => {
       <Table className={props.classes.table2}>
         <TableHead>
           <TableRow>
-            Current Candidates
+            <TableCell>Selected Candidates</TableCell>
+            <TableCell> </TableCell>
+            <TableCell> </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Applicant Id</TableCell>
@@ -83,7 +90,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectApplicant: (app) => dispatch({ type: 'GET_APPLICANT_DATA', payload: app} )
+    selectApplicant: (app) => dispatch({ type: 'SELECT_APPLICANT', payload: app} )
   }
 }
 

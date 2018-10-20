@@ -12,7 +12,7 @@ const JOBS_URL = 'http://localhost:3001/jobs'
 const APPLICANTS_URL = 'http://localhost:3001/users'
 
 
-const reducer = function(currentState, action = {}){
+const reducer = function(currentState , action = {}){
   let { type, payload } = action
   let newState = { ...currentState }
   switch(type){
@@ -27,6 +27,13 @@ const reducer = function(currentState, action = {}){
     break
     case 'RECIEVE_JOBS':
       newState.jobs = payload.jobs
+    break
+    case 'REPLACE_JOB':
+      const allJobsExceptOne = currentState.jobs.filter(job => {
+        return job.id != action.payload.job.id
+      })
+      newState.jobs = [...allJobsExceptOne, action.payload.job ]
+      newState.selectedJob = action.payload.job
     break
     case 'SELECT_JOB':
       newState.selectedJob = payload
@@ -75,7 +82,34 @@ const reducer = function(currentState, action = {}){
       newState.isLoaded = true
     break
     case 'STORE_SELECTED_APPLICANTS':
-      console.log(currentState);
+      if (currentState.selectedJob) {
+        const job_prof_ids = currentState.selectedJob.job_profiles.map( prof => {
+          return prof.id
+        })
+        const filtered_list = payload.filter(function(obj) { return job_prof_ids.indexOf(obj) == -1; });
+        filtered_list.map(id => {
+          let url = APPLICANTS_URL + `/${id}`
+          fetch(url)
+            .then( r => r.json() )
+            .then( user =>  {
+              store.dispatch({
+                type: 'CREATE_JOB_APP',
+                payload: user
+              })
+            })
+        })
+    }
+    break
+    case 'CREATE_JOB_APP':
+    const url = JOBS_URL + `/${currentState.selectedJob.id}`
+      Adapter.createNewJobApp(payload, currentState.selectedJob.id)
+      .then( r => r.json())
+      .then( job => {
+        store.dispatch({
+          type: 'REPLACE_JOB',
+          payload: job
+        })
+      })
     break
   }
   return newState
@@ -88,9 +122,6 @@ const store = createStore(
       selectedJob: null,
       selectedApplicant: null,
       user: null,
-      // user: {id: 122, email: "abd@123.com", user_type: "applicant"},
-      // user: {id: 111, email: "angela@example.com", user_type: "employer"},
-      // user: {id: 111, email: "angela@example.com", user_type: "client"},
       applicantProfile: null,
       postedJobs: null,
       isLoggedIn: false,

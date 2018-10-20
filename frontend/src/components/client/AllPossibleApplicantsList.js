@@ -24,11 +24,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
-
-function createData(id, name, score, home_zip, travel_radius, position_type, experience, min_wage_rate) {
-  return { id, name, score, home_zip, travel_radius, position_type, experience, min_wage_rate };
-}
-
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -57,11 +52,13 @@ const rows = [
   { id: 'id', numeric: false, disablePadding: true, label: 'id' },
   { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
   { id: 'score', numeric: true, disablePadding: false, label: 'Score' },
-  { id: 'home zip', numeric: true, disablePadding: false, label: 'Home Zip' },
-  { id: 'travel distance', numeric: true, disablePadding: false, label: 'Travel Distance' },
-  { id: 'position type', numeric: true, disablePadding: false, label: 'Position Type' },
+  { id: 'home_zip', numeric: true, disablePadding: false, label: 'Home Zip' },
+  { id: 'travel_distance', numeric: true, disablePadding: false, label: 'Travel Distance' },
+  { id: 'position_type', numeric: true, disablePadding: false, label: 'Position Type' },
   { id: 'experience', numeric: true, disablePadding: false, label: 'Experience' },
-  { id: 'rate per hour', numeric: true, disablePadding: false, label: 'Hourly Rate' },
+  { id: 'hourRate', numeric: true, disablePadding: false, label: 'Hourly Rate' },
+  // { id: 'hourly_rate', numeric: true, disablePadding: false, label: 'Hourly Rate' },
+  { id: 'date', numeric: true, disablePadding: false, label: 'Profile Submit Date' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -223,7 +220,6 @@ class AllPossibleApplicantsList extends React.Component {
     .then(this.props.storeApplicants)
   }
 
-
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
@@ -320,6 +316,7 @@ class AllPossibleApplicantsList extends React.Component {
                         <TableCell numeric>{n.position_type}</TableCell>
                         <TableCell numeric>{n.experience}</TableCell>
                         <TableCell numeric>{n.min_wage_rate}</TableCell>
+                        <TableCell numeric>{n.updated_at.slice(0,10)}</TableCell>
                       </TableRow>
                     );
                   })}

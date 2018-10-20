@@ -1,6 +1,7 @@
 import React from 'react'
 import JobList from './JobList'
 import JobDisplay from './JobDisplay'
+import ApplicantProfileDisplay from './ApplicantProfileDisplay'
 import AllPossibleApplicantsList from './AllPossibleApplicantsList'
 
 import { connect } from 'react-redux'
@@ -13,11 +14,20 @@ class JobsContainer extends React.Component {
 
   render() {
     return (
+      <div>
       <div className='container'>
-        <div>
-        <JobList /></div>
-        {this.props.selectedJob ? <div className='container2'><JobDisplay /></div> : <div>Selected Job</div>}
-
+        <div >
+          <JobList />
+        </div>
+        {this.props.selectedJob ?
+          <div className='container'><JobDisplay/></div> :
+          <div>Selected Job</div>}
+      </div>
+      {this.props.selectedJob && this.props.selectedApplicant ?
+        <div className='container3'>
+          <ApplicantProfileDisplay/>
+        </div> :
+        <div>Selected Applicant</div>}
       </div>
     )
   }
@@ -26,7 +36,8 @@ class JobsContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     jobs: state.jobs,
-    selectedJob: state.selectedJob
+    selectedJob: state.selectedJob,
+    selectedApplicant: state.selectedApplicant,
   }
 }
 

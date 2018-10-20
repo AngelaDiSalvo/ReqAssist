@@ -6,7 +6,7 @@ class Adapter {
     let result = await fetch('http://localhost:3001/users', {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user: {
@@ -18,10 +18,33 @@ class Adapter {
     })
   }
 
+  static async createNewJobApp(user, job_id) {
+    const job_profile_id = user.user.job_profiles[0].id
+
+    let result = await fetch('http://localhost:3001/job_apps', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        job_app: {
+          job_profile_id: job_profile_id,
+          job_id: job_id
+        }
+      })
+    })
+    return result
+  }
+
+  static async destroyJobApp(args) {
+    const {job_app_id} = args
+    const url = `http://localhost:3001/job_apps/${job_app_id}`
+    let result = await fetch(url, {
+      method: "DELETE"})
+  }
+
   static async createNewJobProfile(args) {
     const {user_id, name, phone, home_zip, travel_radius, experience, min_wage_rate} = args
-    console.log(args);
-
 
     let result = await fetch('http://localhost:3001/job_profiles', {
       method: "POST",

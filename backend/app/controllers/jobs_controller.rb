@@ -7,7 +7,6 @@ class JobsController < ApplicationController
 
   def show
     job = Job.find(params[:id])
-    byebug
     render json: job
   end
 

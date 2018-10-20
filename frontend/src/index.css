@@ -19,16 +19,31 @@ code {
 }
 
 .container div {
-  width: 30vw;
+  /* width: 40vw; */
+  text-align: center;
+  align-items: center;
+  justify-content: center;
   margin: 0 10px;
 }
 
-.container2 {
+/* .container2 {
   display: flex;
   flex-direction: row;
 }
 
 .container2 div {
   width: 60vw;
+  margin: 0 10px;
+} */
+
+.container3 {
+  display: flex;
+  flex-direction: row;
+}
+
+.container3 div {
+  /* width: 40vw; */
+  align-items: center;
+  justify-content: center;
   margin: 0 10px;
 }
