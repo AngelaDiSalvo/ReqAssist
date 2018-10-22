@@ -35,12 +35,16 @@ const styles = theme => ({
 });
 
 const JobList = (props) => {
+  props.jobs.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+
   return (
     <Paper className={props.classes.root}>
       <Table className={props.classes.table}>
         <TableHead>
           <TableRow>
-            All Jobs
+            <TableCell>All Jobs</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Job Id</TableCell>
@@ -51,7 +55,7 @@ const JobList = (props) => {
         <TableBody>
           {props.jobs.map(job => {
             return (
-              <TableRow key={job.id} onClick={() => props.selectJob(job)}>
+              <TableRow hover key={job.id} onClick={() => props.selectJob(job)}>
                 <TableCell component="th" scope="row">{job.id}</TableCell>
                 <TableCell>{job.company_name}</TableCell>
                 <TableCell>{job.position}</TableCell>

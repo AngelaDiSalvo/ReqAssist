@@ -37,10 +37,22 @@ class Adapter {
   }
 
   static async destroyJobApp(args) {
-    const {job_app_id} = args
-    const url = `http://localhost:3001/job_apps/${job_app_id}`
+    const id = args[0]
+    const job_profile_id = args[1]
+
+    const url = `http://localhost:3001/jobs/${id}/remove`
     let result = await fetch(url, {
-      method: "DELETE"})
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        job: {
+          job_profile_id
+        }
+      })
+    })
+    return result
   }
 
   static async createNewJobProfile(args) {
@@ -84,6 +96,24 @@ class Adapter {
           comments,
           employer_id,
           job_status_id: 1
+        }
+      })
+    })
+  }
+
+
+  static async clientEditJobProfile(args) {
+    const {id, score} = args
+
+    const url = `http://localhost:3001/job_profiles/${id}`
+    let result = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        job_profile: {
+          score
         }
       })
     })

@@ -19,11 +19,11 @@ code {
 }
 
 .container div {
-  /* width: 40vw; */
+  width: 49vw;
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin: 0 10px;
+  margin: 0 5px;
 }
 
 /* .container2 {

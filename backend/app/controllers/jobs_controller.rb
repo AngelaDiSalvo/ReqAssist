@@ -24,6 +24,16 @@ class JobsController < ApplicationController
 
   end
 
+  def remove_job_app
+    job = Job.find(params[:id])
+    profile = job.job_profiles.find(params[:job][:job_profile_id])
+
+     if profile
+        job.job_profiles.delete(profile)
+        render json: job
+     end
+  end
+
   private
 
   def job_params

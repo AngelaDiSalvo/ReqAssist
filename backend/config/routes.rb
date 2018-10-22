@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   post '/login', to: 'auth#create'
   get '/profile', to: 'users#profile'
+  patch '/jobs/:id/remove', to: 'jobs#remove_job_app'
 
 
 end

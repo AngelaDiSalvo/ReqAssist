@@ -31,4 +31,5 @@ private
 
 def job_app_params
   params.require(:job_app).permit(:job_profile_id, :job_id)
+  # params.permit(:job_profile_id, :job_id)
 end

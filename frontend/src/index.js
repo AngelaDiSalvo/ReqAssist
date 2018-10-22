@@ -34,6 +34,7 @@ const reducer = function(currentState , action = {}){
       })
       newState.jobs = [...allJobsExceptOne, action.payload.job ]
       newState.selectedJob = action.payload.job
+      newState.selectedApplicant = null
     break
     case 'SELECT_JOB':
       newState.selectedJob = payload
@@ -111,6 +112,21 @@ const reducer = function(currentState , action = {}){
         })
       })
     break
+    case 'FIND_THEN_DELETE_JOB_APP':
+      console.log(payload);
+      Adapter.destroyJobApp(payload)
+      .then(r => r.json())
+      .then( job => {
+        store.dispatch({
+          type: 'REPLACE_JOB',
+          payload: job
+        })
+      })
+    break
+    case 'CLIENT_EDIT_JOB_PROFILE':
+      console.log('reducer');
+      Adapter.clientEditJobProfile(payload)
+    break;
   }
   return newState
 }

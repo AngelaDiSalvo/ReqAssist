@@ -69,7 +69,7 @@ const JobDisplay = (props) => {
         <TableBody>
           {props.selectedJob.job_profiles.map(applicant => {
             return (
-              <TableRow key={applicant.id} onClick={() => props.selectApplicant(applicant)}>
+              <TableRow hover key={applicant.id} onClick={() => props.selectApplicant(applicant)}>
                 <TableCell>{applicant.id}</TableCell>
                 <TableCell>{applicant.name}</TableCell>
                 <TableCell>{applicant.score}</TableCell>

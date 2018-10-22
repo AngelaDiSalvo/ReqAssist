@@ -211,7 +211,7 @@ class AllPossibleApplicantsList extends React.Component {
     orderBy: 'id',
     selected: [],
     page: 0,
-    rowsPerPage: 5,
+    rowsPerPage: 25,
   };
 
   componentDidMount(){
