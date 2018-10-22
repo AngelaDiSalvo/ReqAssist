@@ -7,6 +7,7 @@ class Adapter {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         user: {
@@ -25,6 +26,7 @@ class Adapter {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         job_app: {
@@ -44,7 +46,8 @@ class Adapter {
     let result = await fetch(url, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         job: {
@@ -61,7 +64,8 @@ class Adapter {
     let result = await fetch('http://localhost:3001/job_profiles', {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         job_profile: {
@@ -83,7 +87,8 @@ class Adapter {
     let result = await fetch('http://localhost:3001/jobs', {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         job: {
@@ -102,21 +107,27 @@ class Adapter {
   }
 
 
-  static async clientEditJobProfile(args) {
-    const {id, score} = args
+  static async clientEditJobProfile(array) {
+    let id = array[0]
+    let comments = array[1]
+    let score = array[2]
+
 
     const url = `http://localhost:3001/job_profiles/${id}`
     let result = await fetch(url, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         job_profile: {
+          comments,
           score
         }
       })
     })
+    return result
   }
 
 }

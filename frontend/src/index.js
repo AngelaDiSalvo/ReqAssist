@@ -17,7 +17,7 @@ const reducer = function(currentState , action = {}){
   let newState = { ...currentState }
   switch(type){
     case 'FETCH_JOBS':
-      fetch(JOBS_URL).then( response => response.json() )
+      fetch(JOBS_URL, {headers: {Authorization: `Bearer ${localStorage.token}`}}).then( response => response.json() )
         .then( jobs =>  {
           store.dispatch({
             type: 'RECIEVE_JOBS',
@@ -29,6 +29,8 @@ const reducer = function(currentState , action = {}){
       newState.jobs = payload.jobs
     break
     case 'REPLACE_JOB':
+      console.log(payload);
+      console.log(action.payload);
       const allJobsExceptOne = currentState.jobs.filter(job => {
         return job.id != action.payload.job.id
       })
@@ -62,7 +64,7 @@ const reducer = function(currentState , action = {}){
     break;
     case 'FETCH_APPLICANT_PROFILE':
       let USER_URL = APPLICANTS_URL + `/${action.payload}`
-      fetch(USER_URL).then( r => r.json() )
+      fetch(USER_URL, {headers: {"Authorization": `Bearer ${localStorage.token}`}}).then( r => r.json() )
         .then( user =>  {
           store.dispatch({
             type: 'SET_APPLICANT_PROFILE',
@@ -90,7 +92,7 @@ const reducer = function(currentState , action = {}){
         const filtered_list = payload.filter(function(obj) { return job_prof_ids.indexOf(obj) == -1; });
         filtered_list.map(id => {
           let url = APPLICANTS_URL + `/${id}`
-          fetch(url)
+          fetch(url, {headers: {"Authorization": `Bearer ${localStorage.token}`}})
             .then( r => r.json() )
             .then( user =>  {
               store.dispatch({
@@ -113,7 +115,6 @@ const reducer = function(currentState , action = {}){
       })
     break
     case 'FIND_THEN_DELETE_JOB_APP':
-      console.log(payload);
       Adapter.destroyJobApp(payload)
       .then(r => r.json())
       .then( job => {
@@ -124,8 +125,8 @@ const reducer = function(currentState , action = {}){
       })
     break
     case 'CLIENT_EDIT_JOB_PROFILE':
-      console.log('reducer');
-      Adapter.clientEditJobProfile(payload)
+      console.log(payload);
+      // Adapter.clientEditJobProfile(payload)
     break;
   }
   return newState

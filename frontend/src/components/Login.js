@@ -74,10 +74,6 @@ const Login = (props) => {
                 autoComplete="current-password"
               />
             </FormControl>
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -115,7 +111,6 @@ function handleLogin(e, dispatch) {
   })
   .then(resp => resp.json())
   .then(data_with_token => {
-    console.log(data_with_token);
     if (!!data_with_token.jwt) {
       localStorage.token = data_with_token.jwt;
       dispatch({type: "SET_USER", payload: data_with_token.user})

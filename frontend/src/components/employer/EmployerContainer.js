@@ -13,7 +13,7 @@ class EmployerContainer extends React.Component{
   }
 
   fetchJobs = (id) => {
-    fetch(`http://localhost:3001/users/${id}`)
+    fetch(`http://localhost:3001/users/${id}`, {headers: {Authorization: `Bearer ${localStorage.token}`}})
       .then(r => r.json())
       .then(this.props.storePostedJobs)
   }

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Adapter from '../../Adapter'
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -215,7 +214,7 @@ class AllPossibleApplicantsList extends React.Component {
   };
 
   componentDidMount(){
-    fetch('http://localhost:3001/job_profiles')
+    fetch('http://localhost:3001/job_profiles', {headers: {Authorization: `Bearer ${localStorage.token}`}})
     .then(r => r.json())
     .then(this.props.storeApplicants)
   }

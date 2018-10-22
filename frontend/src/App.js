@@ -16,6 +16,9 @@ class App extends Component {
 
   componentDidMount() {
     const token = localStorage.token;
+    if (token) {
+
+
     fetch("http://localhost:3001/profile", {
       method: "GET",
       headers: {
@@ -28,11 +31,12 @@ class App extends Component {
           this.props.setUser(data.user)
         }
       });
+    }
   }
 
 
   render() {
-    if (this.props.isLoggedIn && this.props.user.user_type === "client") {
+    if (this.props.isLoggedIn && this.props.user && this.props.user.user_type === "client") {
       return (
         <div className="App">
           <Navbar />
@@ -44,7 +48,7 @@ class App extends Component {
       )
     }
 
-    if (this.props.isLoggedIn && this.props.user.user_type === "employer") {
+    if (this.props.isLoggedIn && this.props.user && this.props.user.user_type === "employer") {
       return (
         <div className="App">
           <Navbar />
@@ -55,7 +59,7 @@ class App extends Component {
       )
     }
 
-    if (this.props.isLoggedIn && this.props.user.user_type === "applicant") {
+    if (this.props.isLoggedIn && this.props.user && this.props.user.user_type === "applicant") {
       return (
         <div className="App">
           <CssBaseline />

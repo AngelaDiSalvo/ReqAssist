@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_195420) do
     t.integer "min_wage_rate"
     t.string "language"
     t.integer "score"
+    t.text "comments"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

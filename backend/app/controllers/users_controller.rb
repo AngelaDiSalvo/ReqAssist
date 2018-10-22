@@ -1,13 +1,21 @@
 class UsersController < ApplicationController
-  # skip_before_action :check_authentication, only: [:create]
+  skip_before_action :authorized, only: [:create]
 
-  def index
-    users = User.all
-    render json: users
-  end
+  # def index
+  #   users = User.all
+  #   render json: users
+  # end
 
   def show
-    user = User.find(params[:id])
+    if current_user.user_type == "client"
+      user = User.find(params[:id])
+    elsif (current_user.user_type == "employer" || current_user.user_type == "applicant")
+      if current_user.id == params[:id].to_i
+        user = current_user
+      else
+        return render json: {message: "Please log in"}
+      end
+    end
     render json: user
   end
 

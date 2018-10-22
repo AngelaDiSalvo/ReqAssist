@@ -1,18 +1,25 @@
 class JobsController < ApplicationController
 
   def index
-    jobs = Job.all
+    if current_user.user_type == "client"
+      jobs = Job.all
+    elsif current_user.user_type == "employer"
+      jobs = current_user.posted_jobs
+    end
+
     render json: jobs
   end
 
-  def show
-    job = Job.find(params[:id])
-    render json: job
-  end
+  # def show
+  #   job = Job.find(params[:id])
+  #   render json: job
+  # end
 
   def create
-    job = Job.new(job_params)
-    if job.valid?
+    job = current_user.posted_jobs.build(job_params)
+    # job = Job.new(job_params)
+    if current_user.user_type == "employer" && job.valid?
+
       job.save
       render json: job
     else
@@ -20,18 +27,23 @@ class JobsController < ApplicationController
     end
   end
 
-  def update
-
-  end
+  # def update
+  #
+  # end
 
   def remove_job_app
-    job = Job.find(params[:id])
-    profile = job.job_profiles.find(params[:job][:job_profile_id])
+    if current_user.user_type == "client"
+      job = Job.find(params[:id])
+      profile = job.job_profiles.find(params[:job][:job_profile_id])
 
-     if profile
-        job.job_profiles.delete(profile)
-        render json: job
-     end
+       if profile
+          job.job_profiles.delete(profile)
+          render json: job
+       end
+    else 
+      render json: {message: "you are not authorized: 401"}
+    end
+
   end
 
   private
