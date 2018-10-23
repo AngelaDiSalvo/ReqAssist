@@ -9,10 +9,14 @@ class JobProfilesController < ApplicationController
     render json: job_profiles
   end
 
-  # def show
-  #   job_profile = JobProfile.find(params[:id])
-  #   render json: job_profile
-  # end
+  def show
+    if current_user.user_type == "client"
+      job_profile = JobProfile.find(params[:id])
+    elsif current_user.user_type == "applicant"
+      job_profile = current_user.job_profiles
+    end
+    render json: job_profile
+  end
 
   def create
     if current_user.user_type == "applicant"
@@ -29,7 +33,7 @@ class JobProfilesController < ApplicationController
   end
 
   def update
-    if current_user.user_type == "applicant"
+    if current_user.user_type == "applicant" || current_user.user_type == "client"
       job_profile = JobProfile.find(params[:id])
       job_profile.update(job_profile_params)
       render json: job_profile

@@ -10,10 +10,16 @@ class JobsController < ApplicationController
     render json: jobs
   end
 
-  # def show
-  #   job = Job.find(params[:id])
-  #   render json: job
-  # end
+  def show
+    if current_user.user_type == "client"
+      job = Job.find(params[:id])
+    elsif current_user.user_type == "employer"
+      job = current_user.jobs
+    end
+
+
+    render json: job
+  end
 
   def create
     job = current_user.posted_jobs.build(job_params)
@@ -40,7 +46,7 @@ class JobsController < ApplicationController
           job.job_profiles.delete(profile)
           render json: job
        end
-    else 
+    else
       render json: {message: "you are not authorized: 401"}
     end
 

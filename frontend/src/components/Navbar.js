@@ -1,11 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -40,9 +52,9 @@ class MenuAppBar extends React.Component {
     window.location.reload()
   };
 
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
+  // handleMenu = event => {
+  //   this.setState({ anchorEl: event.currentTarget });
+  // };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
@@ -73,16 +85,16 @@ class MenuAppBar extends React.Component {
             </Typography>
             {auth && (
               <div>
-                <IconButton
-                  aria-owns={open ? 'menu-appbar' : null}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
+                {/* <IconButton
+                  // aria-owns={open ? 'menu-appbar' : null}
+                  // aria-haspopup="true"
+                  // onClick={this.handleMenu}
                   color="inherit"
-                >
-                  {this.props.user.user_type === "client" ? "admin" : this.props.user.user_type}
+                > */}
+                  {this.props.user.user_type === "client" ? "admin " : this.props.user.user_type}
                   <AccountCircle />
-                </IconButton>
-                <Menu
+                {/* </IconButton> */}
+                {/* <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
                   anchorOrigin={{
@@ -98,7 +110,7 @@ class MenuAppBar extends React.Component {
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu>
+                </Menu> */}
               </div>
             )}
           </Toolbar>
@@ -110,6 +122,7 @@ class MenuAppBar extends React.Component {
 
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -118,4 +131,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(MenuAppBar));
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(MenuAppBar));

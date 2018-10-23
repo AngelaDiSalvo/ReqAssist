@@ -20,6 +20,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
 
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -32,10 +33,10 @@ const styles = theme => ({
     maxWidth: 700,
     minWidth: 700,
   },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
+  // container: {
+  //   display: 'flex',
+  //   flexWrap: 'wrap',
+  // },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -54,32 +55,35 @@ const styles = theme => ({
       duration: theme.transitions.duration.shortest,
     }),
     marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
-    },
+      [theme.breakpoints.up('sm')]: {
+        marginRight: -8,
+      },
   },
   menu: {
-    width: 200
+    width: 100
   },
   expandOpen: {
     transform: 'rotate(180deg)',
-  }
+  },
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3,
+  },
 });
 
 class ApplicantProfileDisplay extends React.Component{
   state = {
     expanded: false,
     selectedCandidate: null,
-    score: 0
+    score: this.props.selectedApplicant.score
   };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
-
-  showForm = () => {
-    console.log('hi');
-  }
 
   handleChange = name => event => {
     this.setState({
@@ -93,7 +97,9 @@ class ApplicantProfileDisplay extends React.Component{
     const appId = app.id
     let width = window.screen.availWidth;
     return (
-      <div>
+      <Grid container spacing={24}>
+        <Grid item xs={12}>
+        </Grid>
         <Card className={this.props.classes.card} justify="center">
           <CardHeader
             title={app.name}
@@ -111,9 +117,6 @@ class ApplicantProfileDisplay extends React.Component{
             </Typography>
           </CardContent>
           <CardActions className={this.props.classes.actions} disableActionSpacing>
-            <IconButton aria-label="Edit">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this.showForm(appId)}><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none" /></svg>
-            </IconButton>
             <IconButton aria-label="Delete">
               <DeleteIcon onClick={() => this.props.deleteJobApps([jobId, appId])}/>
             </IconButton>
@@ -125,11 +128,13 @@ class ApplicantProfileDisplay extends React.Component{
               aria-expanded={this.state.expanded}
               aria-label="Show more"
             >
-              <ExpandMoreIcon />
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none" /></svg>
+              <ExpandMoreIcon/>
             </IconButton>
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
+              <Grid container spacing={24}>
               <form className={this.props.classes.container} noValidate autoComplete="off" onSubmit={e => this.props.clientEditJobProfile(e, app.id, this.props.selectedJob.id)}>
                 <TextField
                   id="filled-multiline-static"
@@ -144,7 +149,7 @@ class ApplicantProfileDisplay extends React.Component{
                 <TextField
                   id="filled-number"
                   label="Score"
-                  value={app.score}
+                  defaultValue={app.score}
                   onChange={this.handleChange("score")}
                   type="number"
                   className={this.props.classes.textField}
@@ -163,14 +168,14 @@ class ApplicantProfileDisplay extends React.Component{
                   Submit Change
                 </Button>
               </form>
+            </Grid>
             </CardContent>
           </Collapse>
         </Card>
-      </div>
+      </Grid>
     )
   }
 }
-
 
 
 function mapStateToProps(state) {
@@ -198,8 +203,6 @@ function mapDispatchToProps(dispatch) {
         .then(r => r.json())
         .then(job => (dispatch({type: "REPLACE_JOB", payload: job})))
     },
-    // // (appId) => {
-    //   dispatch( {type: 'CLIENT_EDIT_JOB_PROFILE', payload: (appId)} )},
   }
 }
 
