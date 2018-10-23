@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,56 +20,201 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
+const drawerWidth = 400;
+
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
+  // root: {
+  //   width: '100%',
+  //   marginTop: theme.spacing.unit * 3,
+  //   display: 'flex',
+  //   overflowX: 'auto',
+  // },
   table: {
     minWidth: 100,
     maxHeight: 100,
   },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 20,
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  grow: {
+    flexGrow: 1,
+  },
 });
 
-const JobList = (props) => {
-  props.jobs.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+class JobList extends React.Component {
+  state = {
+    open: false,
+    auth: true,
+  };
 
-  return (
-    <Paper className={props.classes.root}>
-      <Table className={props.classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>All Jobs</TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Job Id</TableCell>
-            <TableCell>Company Name</TableCell>
-            <TableCell>Position Type</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.jobs.map(job => {
-            return (
-              <TableRow hover key={job.id} onClick={() => props.selectJob(job)}>
-                <TableCell component="th" scope="row">{job.id}</TableCell>
-                <TableCell>{job.company_name}</TableCell>
-                <TableCell>{job.position}</TableCell>
-              </TableRow>)})}
-        </TableBody>
-      </Table>
-    </Paper>
-  )
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleChange = event => {
+    localStorage.token = ''
+    this.setState({ auth: event.target.checked });
+    window.location.reload()
+  };
+
+  selectJob = job => {
+    this.props.selectJob(job)
+    this.handleDrawerClose()
+  }
+
+  render() {
+    const { open, auth } = this.state;
+    this.props.jobs.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+    return (
+      <div className={this.props.classes.root}>
+
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
+            }
+            label={auth ? 'Logout' : 'Login'}
+          />
+        </FormGroup>
+        <AppBar position="sticky">
+          <Toolbar disableGutters={!open}>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames(this.props.classes.menuButton, open && this.props.classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={this.props.classes.grow}>
+            </Typography>
+            {auth && (
+              <div>
+                {this.props.user.email}
+                <AccountCircle />
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={this.props.classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: this.props.classes.drawerPaper,
+          }}
+        >
+          <div className={this.props.classes.drawerHeader}>
+            All Jobs
+            <IconButton onClick={this.handleDrawerClose}>
+              {this.props.theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <Table className={this.props.classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Job Id</TableCell>
+                  <TableCell>Company Name</TableCell>
+                  <TableCell>Position Type</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.props.jobs.map(job => {
+                  return (
+                    <TableRow hover key={job.id} onClick={() => this.selectJob(job)}>
+                      <TableCell component="th" scope="row">{job.id}</TableCell>
+                      <TableCell>{job.company_name}</TableCell>
+                      <TableCell>{job.position}</TableCell>
+                    </TableRow>)})}
+              </TableBody>
+            </Table>
+          </List>
+        </Drawer>
+      </div>
+    )
+  }
 }
 
 function mapStateToProps(state) {
   return {
     jobs: state.jobs,
-    selectedJob: state.selectedJob
+    selectedJob: state.selectedJob,
+    user: state.user
   }
 }
 
@@ -81,6 +226,7 @@ function mapDispatchToProps(dispatch) {
 
 JobList.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(JobList))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(JobList))

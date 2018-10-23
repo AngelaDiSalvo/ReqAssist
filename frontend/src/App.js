@@ -10,6 +10,7 @@ import Homepage from './components/Homepage'
 import ApplicantContainer from './components/applicant/ApplicantContainer'
 import EmployerContainer from './components/employer/EmployerContainer'
 import AllPossibleApplicantsList from './components/client/AllPossibleApplicantsList'
+import JobList from './components/client/JobList'
 
 
 class App extends Component {
@@ -39,11 +40,9 @@ class App extends Component {
     if (this.props.isLoggedIn && this.props.user && this.props.user.user_type === "client") {
       return (
         <div className="App">
-          <Navbar />
-          <div className="App-intro">
-            <JobsContainer />
-            <AllPossibleApplicantsList />
-          </div>
+          <JobList />
+          <JobsContainer />
+          <AllPossibleApplicantsList />
         </div>
       )
     }

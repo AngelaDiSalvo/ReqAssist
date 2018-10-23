@@ -172,11 +172,12 @@ let EnhancedTableToolbar = props => {
             </Button>
           </Tooltip>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
+          null
+          // <Tooltip title="Filter list">
+          //   <IconButton aria-label="Filter list">
+          //     <FilterListIcon />
+          //   </IconButton>
+          // </Tooltip>
         )}
       </div>
     </Toolbar>
@@ -361,7 +362,7 @@ function mapDispatchToProps(dispatch) {
   return {
     storeApplicants: (app) => dispatch( { type: 'STORE_ALL_APPLICANTS', payload: app} ),
     addNewJobApps: (selected) => {
-      dispatch( {type: 'STORE_SELECTED_APPLICANTS', payload: selected} )},
+      dispatch( {type: 'CREATE_JOB_APP', payload: selected} )},
   }
 }
 

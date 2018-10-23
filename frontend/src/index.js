@@ -84,35 +84,24 @@ const reducer = function(currentState , action = {}){
       newState.all_applicants = payload
       newState.isLoaded = true
     break
-    case 'STORE_SELECTED_APPLICANTS':
+    case 'CREATE_JOB_APP':
       if (currentState.selectedJob) {
         const job_prof_ids = currentState.selectedJob.job_profiles.map( prof => {
           return prof.id
         })
         const filtered_list = payload.filter(function(obj) { return job_prof_ids.indexOf(obj) == -1; });
+
         filtered_list.map(id => {
-          let url = APPLICANTS_URL + `/${id}`
-          fetch(url, {headers: {"Authorization": `Bearer ${localStorage.token}`}})
-            .then( r => r.json() )
-            .then( user =>  {
-              store.dispatch({
-                type: 'CREATE_JOB_APP',
-                payload: user
-              })
+          Adapter.createNewJobApp(id, currentState.selectedJob.id)
+          .then( r => r.json())
+          .then( job => {
+            store.dispatch({
+              type: 'REPLACE_JOB',
+              payload: job
             })
+          })
         })
     }
-    break
-    case 'CREATE_JOB_APP':
-    const url = JOBS_URL + `/${currentState.selectedJob.id}`
-      Adapter.createNewJobApp(payload, currentState.selectedJob.id)
-      .then( r => r.json())
-      .then( job => {
-        store.dispatch({
-          type: 'REPLACE_JOB',
-          payload: job
-        })
-      })
     break
     case 'FIND_THEN_DELETE_JOB_APP':
       Adapter.destroyJobApp(payload)
@@ -124,10 +113,6 @@ const reducer = function(currentState , action = {}){
         })
       })
     break
-    case 'CLIENT_EDIT_JOB_PROFILE':
-      console.log(payload);
-      // Adapter.clientEditJobProfile(payload)
-    break;
   }
   return newState
 }

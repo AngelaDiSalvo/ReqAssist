@@ -19,9 +19,9 @@ class Adapter {
     })
   }
 
-  static async createNewJobApp(user, job_id) {
-    debugger
-    const job_profile_id = user.user.job_profiles[0].id
+  static async createNewJobApp(job_profile_id, job_id) {
+    // debugger
+    // const job_profile_id = user.user.job_profiles[0].id
 
     let result = await fetch('http://localhost:3001/job_apps', {
       method: "POST",

@@ -28,9 +28,9 @@ import Menu from '@material-ui/core/Menu';
 import { connect } from 'react-redux'
 
 const styles = {
-  root: {
-    flexGrow: 1,
-  },
+  // root: {
+  //   flexGrow: 1,
+  // },
   grow: {
     flexGrow: 1,
   },
@@ -63,7 +63,6 @@ class MenuAppBar extends React.Component {
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
-    const open = Boolean(anchorEl);
 
     return (
       <div className={classes.root}>
@@ -85,32 +84,8 @@ class MenuAppBar extends React.Component {
             </Typography>
             {auth && (
               <div>
-                {/* <IconButton
-                  // aria-owns={open ? 'menu-appbar' : null}
-                  // aria-haspopup="true"
-                  // onClick={this.handleMenu}
-                  color="inherit"
-                > */}
-                  {this.props.user.user_type === "client" ? "admin " : this.props.user.user_type}
-                  <AccountCircle />
-                {/* </IconButton> */}
-                {/* <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu> */}
+                {this.props.user.user_type === "client" ? "admin " : this.props.user.user_type}
+                <AccountCircle />
               </div>
             )}
           </Toolbar>
