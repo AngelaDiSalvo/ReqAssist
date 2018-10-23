@@ -30,13 +30,10 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const styles = theme => ({
   card: {
-    maxWidth: 700,
-    minWidth: 700,
+    maxWidth: 600,
+    minWidth: 600,
+    background: '#e8e4ff'
   },
-  // container: {
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  // },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -76,13 +73,8 @@ const styles = theme => ({
 
 class ApplicantProfileDisplay extends React.Component{
   state = {
-    expanded: false,
     selectedCandidate: null,
     score: this.props.selectedApplicant.score
-  };
-
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
   };
 
   handleChange = name => event => {
@@ -92,6 +84,8 @@ class ApplicantProfileDisplay extends React.Component{
   };
 
   render() {
+    const expanded = this.props.is_job_profile_expanded
+    console.log(this.props.is_job_profile_expanded);
     const app = this.props.selectedApplicant
     const jobId = this.props.selectedJob.id
     const appId = app.id
@@ -113,7 +107,7 @@ class ApplicantProfileDisplay extends React.Component{
               zip: {app.home_zip}<br />
               travel distance: {app.travel_radius}miles<br />
               profile date: {app.updated_at.slice(0,10)}<br />
-              admin comments: {app.comments}
+              <strong>admin comments: {app.comments}</strong>
             </Typography>
           </CardContent>
           <CardActions className={this.props.classes.actions} disableActionSpacing>
@@ -122,17 +116,17 @@ class ApplicantProfileDisplay extends React.Component{
             </IconButton>
             <IconButton
               className={classnames(this.props.classes.expand, {
-                [this.props.classes.expandOpen]: this.state.expanded,
+                [this.props.classes.expandOpen]: expanded,
               })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
+              onClick={this.props.handleExpandClick}
+              aria-expanded={expanded}
               aria-label="Show more"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none" /></svg>
               <ExpandMoreIcon/>
             </IconButton>
           </CardActions>
-          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Grid container spacing={24}>
               <form className={this.props.classes.container} noValidate autoComplete="off" onSubmit={e => this.props.clientEditJobProfile(e, app.id, this.props.selectedJob.id)}>
@@ -186,6 +180,7 @@ function mapStateToProps(state) {
     applicantProfile: state.applicantProfile,
     postedJobs: state.postedJobs,
     all_applicants: state.all_applicants,
+    is_job_profile_expanded: state.is_job_profile_expanded,
   }
 }
 function mapDispatchToProps(dispatch) {
@@ -203,6 +198,8 @@ function mapDispatchToProps(dispatch) {
         .then(r => r.json())
         .then(job => (dispatch({type: "REPLACE_JOB", payload: job})))
     },
+
+    handleExpandClick: () => dispatch( {type: 'TOGGLE_PROFILE_EXPAND'} )
   }
 }
 

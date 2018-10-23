@@ -43,6 +43,7 @@ const reducer = function(currentState , action = {}){
     break;
     case 'SELECT_APPLICANT':
       newState.selectedApplicant = payload
+      newState.is_job_profile_expanded = false
     break;
     case "SET_USER":
       newState.user = payload
@@ -113,6 +114,9 @@ const reducer = function(currentState , action = {}){
         })
       })
     break
+    case 'TOGGLE_PROFILE_EXPAND':
+      newState.is_job_profile_expanded = !currentState.is_job_profile_expanded
+    break
   }
   return newState
 }
@@ -131,6 +135,7 @@ const store = createStore(
       toggleLogin: false,
       isLoaded: false,
       all_applicants: null,
+      is_job_profile_expanded: false,
     }
 )
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import ApplicantsList from './ApplicantsList'
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,9 +16,10 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
+    background: '#e8e4ff'
   },
   table: {
-    minWidth: 500,
+    minWidth: 400,
   },
 });
 

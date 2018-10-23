@@ -56,7 +56,6 @@ const rows = [
   { id: 'position_type', numeric: true, disablePadding: false, label: 'Position Type' },
   { id: 'experience', numeric: true, disablePadding: false, label: 'Experience' },
   { id: 'hourRate', numeric: true, disablePadding: false, label: 'Hourly Rate' },
-  // { id: 'hourly_rate', numeric: true, disablePadding: false, label: 'Hourly Rate' },
   { id: 'date', numeric: true, disablePadding: false, label: 'Profile Submit Date' },
 ];
 
@@ -120,6 +119,7 @@ EnhancedTableHead.propTypes = {
 const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit,
+    background: 'linear-gradient(to right, rgba(89, 63, 98, 1), rgba(123, 109, 141, 1), rgba(132, 153, 177, 1), rgba(165, 196, 212, 1))',
   },
   highlight:
     theme.palette.type === 'light'
@@ -165,20 +165,14 @@ let EnhancedTableToolbar = props => {
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
-        {numSelected > 0 ? (
+        {numSelected > 0 ?
           <Tooltip title="Add">
             <Button aria-label="Add">
               <AddIcon onClick={() => props.addNewJobApps(selected.sort())}/>
             </Button>
           </Tooltip>
-        ) : (
-          null
-          // <Tooltip title="Filter list">
-          //   <IconButton aria-label="Filter list">
-          //     <FilterListIcon />
-          //   </IconButton>
-          // </Tooltip>
-        )}
+         : null
+        }
       </div>
     </Toolbar>
   );
@@ -313,7 +307,7 @@ class AllPossibleApplicantsList extends React.Component {
                         <TableCell numeric>{n.score}</TableCell>
                         <TableCell numeric>{n.home_zip}</TableCell>
                         <TableCell numeric>{n.travel_radius}</TableCell>
-                        <TableCell numeric>{n.position_type}</TableCell>
+                        <TableCell numeric>{n.position_type.map(pos => `${pos}, `)}</TableCell>
                         <TableCell numeric>{n.experience}</TableCell>
                         <TableCell numeric>{n.min_wage_rate}</TableCell>
                         <TableCell numeric>{n.updated_at.slice(0,10)}</TableCell>

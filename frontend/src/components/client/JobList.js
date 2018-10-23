@@ -42,13 +42,15 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const drawerWidth = 400;
 
+
+const StyledAppBar = withStyles({
+  root: {
+    background: '#36151e',
+    color: 'white',
+  },
+})(AppBar);
+
 const styles = theme => ({
-  // root: {
-  //   width: '100%',
-  //   marginTop: theme.spacing.unit * 3,
-  //   display: 'flex',
-  //   overflowX: 'auto',
-  // },
   table: {
     minWidth: 100,
     maxHeight: 100,
@@ -80,6 +82,7 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    background: '#e8e4ff'
   },
   drawerHeader: {
     display: 'flex',
@@ -139,7 +142,6 @@ class JobList extends React.Component {
     this.props.jobs.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
     return (
       <div className={this.props.classes.root}>
-
         <FormGroup>
           <FormControlLabel
             control={
@@ -148,7 +150,7 @@ class JobList extends React.Component {
             label={auth ? 'Logout' : 'Login'}
           />
         </FormGroup>
-        <AppBar position="sticky">
+        <StyledAppBar position="sticky">
           <Toolbar disableGutters={!open}>
             <IconButton
               color="inherit"
@@ -167,7 +169,7 @@ class JobList extends React.Component {
               </div>
             )}
           </Toolbar>
-        </AppBar>
+        </StyledAppBar>
         <Drawer
           className={this.props.classes.drawer}
           variant="persistent"

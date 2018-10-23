@@ -1,22 +1,121 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import engineer from '../pics/engineer.svg'
+
+import PropTypes from 'prop-types';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import NativeSelect from '@material-ui/core/NativeSelect';
+
+const StyledButton = withStyles({
+  root: {
+    background: 'linear-gradient(to left, rgba(89, 63, 98, 1), rgba(123, 109, 141, 1), rgba(132, 153, 177, 1), rgba(165, 196, 212, 1))',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px',
+  }
+})(Button);
+
+const styles = theme => ({
+  layout: {
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3,
+  },
+});
 
 const Signup = (props) => {
   return (
-    <form onSubmit={e => props.submitCredentials(e)} id="login-box">
-      <div className="left" >
-        <h1>Sign up</h1>
-        <select name="user type" >
-          <option>applicant</option>
-          <option>employer</option>
-        </select>
-        <input type="text" name="email" placeholder="E-mail" />
-        <input type="password" name="password" placeholder="Password" />
-        <input type="password" name="password2" placeholder="Retype password" />
-        <input type="submit" name="signup_submit" value="Sign me up" />
-      </div>
-    </form>
+    <React.Fragment>
+      <CssBaseline />
+      <main className={props.classes.layout}>
+        <Paper className={props.classes.paper}>
+          <img src={engineer} className="App-Logo" />
+          <Typography component="h1" variant="h5">
+            Sign Up
+          </Typography>
+          <form className={props.classes.form} onSubmit={e => props.submitCredentials(e)}>
+            <FormControl margin="normal" required fullWidth>
+              <NativeSelect
+                className={props.classes.selectEmpty}
+                name="user_type"
+              >
+                <option>applicant</option>
+                <option>employer</option>
+              </NativeSelect>
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" autoFocus />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                name="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Re-Type Password</InputLabel>
+              <Input
+                name="password2"
+                type="password"
+                id="password2"
+              />
+            </FormControl>
+            <StyledButton
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={props.classes.submit}
+            >
+              Sign Me Up
+            </StyledButton>
+          </form>
+        </Paper>
+      </main>
+    </React.Fragment>
   )
 }
 
@@ -39,4 +138,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Signup)
+Signup.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(Signup))

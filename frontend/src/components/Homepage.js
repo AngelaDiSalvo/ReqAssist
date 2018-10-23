@@ -1,22 +1,98 @@
 import React from 'react'
 import Signup from "./Signup"
 import Login from "./Login"
-// import '../css/homepage.css';
 import { connect } from 'react-redux'
 import {Route, Switch, NavLink, Redirect, withRouter} from 'react-router-dom';
+import engineer from '../pics/engineer.svg'
+
+import PropTypes from 'prop-types';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const StyledButton = withStyles({
+  root: {
+    background: 'linear-gradient(to left, rgba(89, 63, 98, 1), rgba(123, 109, 141, 1), rgba(132, 153, 177, 1), rgba(165, 196, 212, 1))',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px',
+  }
+})(Button);
+
+const styles = theme => ({
+  layout: {
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3,
+  },
+});
 
 
 const Homepage = (props) => {
-  //have a button that redirects you to either the login or signup page
   if (props.toggleSignUp === false && props.toggleLogin === false) {
     return (
-      <div id='login-box'>
-        <div className="left">
-          <h1>Welcome to Recruiter Assistant</h1>
-          <button className='button' onClick={e => props.signUpRedirect(e)}>Sign up</button>
-          <button className='button' onClick={e => props.loginRedirect(e)}>Login</button>
-        </div>
-      </div>
+      <React.Fragment>
+        <CssBaseline />
+        <main className={props.classes.layout}>
+          <Paper className={props.classes.paper}>
+              <img src={engineer} className="App-Logo" />
+            <Typography component="h1" variant="h5">
+              Welcome to ReqAssist
+            </Typography>
+              <StyledButton
+                type="submit"
+                fullWidth
+                variant="contained"
+                className={props.classes.submit}
+                onClick={e => props.signUpRedirect(e)}
+              >
+                Sign Up
+              </StyledButton>
+              <StyledButton
+                type="submit"
+                fullWidth
+                variant="contained"
+                className={props.classes.submit}
+                onClick={e => props.loginRedirect(e)}
+              >
+                Login
+              </StyledButton>
+          </Paper>
+        </main>
+          {/* <button className='button' onClick={e => props.signUpRedirect(e)}>Sign up</button>
+          <button className='button' onClick={e => props.loginRedirect(e)}>Login</button> */}
+
+      </React.Fragment>
       )
     } else if (props.toggleSignUp === true) {
       return (
@@ -31,6 +107,7 @@ const Homepage = (props) => {
         </div>
       )
     }
+
 }
 
 
@@ -49,4 +126,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
+Homepage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Homepage));

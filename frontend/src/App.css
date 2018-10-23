@@ -6,6 +6,10 @@
   text-align: center;
 }
 
+.App-Logo {
+  max-height: 250px;
+}
+
 .App-header {
   text-align: center;
   background-color: #282c34;

@@ -15,6 +15,21 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+const StyledButton = withStyles({
+  root: {
+    background: 'linear-gradient(to left, rgba(89, 63, 98, 1), rgba(123, 109, 141, 1), rgba(132, 153, 177, 1), rgba(165, 196, 212, 1))',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px',
+  },
+  label: {
+    textTransform: 'capitalize',
+  },
+})(Button);
+
 const styles = theme => ({
   layout: {
     width: 'auto',
@@ -74,7 +89,7 @@ const Login = (props) => {
                 autoComplete="current-password"
               />
             </FormControl>
-            <Button
+            <StyledButton
               type="submit"
               fullWidth
               variant="contained"
@@ -82,7 +97,7 @@ const Login = (props) => {
               className={props.classes.submit}
             >
               Sign in
-            </Button>
+            </StyledButton>
           </form>
         </Paper>
       </main>
