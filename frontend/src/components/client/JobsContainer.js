@@ -1,5 +1,4 @@
 import React from 'react'
-// import JobList from './JobList'
 import JobDisplay from './JobDisplay'
 import ApplicantProfileDisplay from './ApplicantProfileDisplay'
 import AllPossibleApplicantsList from './AllPossibleApplicantsList'

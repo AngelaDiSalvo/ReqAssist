@@ -21,7 +21,6 @@ class JobProfilesController < ApplicationController
   def create
     if current_user.user_type == "applicant"
       job_profile = JobProfile.new(job_profile_params)
-      byebug
 
       if job_profile.valid?
         job_profile.save

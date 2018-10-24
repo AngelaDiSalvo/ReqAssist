@@ -19,7 +19,7 @@ const styles = theme => ({
     background: '#e8e4ff'
   },
   table: {
-    minWidth: 400,
+    minWidth: 300,
   },
 });
 

@@ -85,14 +85,13 @@ class ApplicantProfileDisplay extends React.Component{
 
   render() {
     const expanded = this.props.is_job_profile_expanded
-    console.log(this.props.is_job_profile_expanded);
     const app = this.props.selectedApplicant
     const jobId = this.props.selectedJob.id
     const appId = app.id
     let width = window.screen.availWidth;
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
+      <Grid container spacing={12}>
+        <Grid item xs={6}>
         </Grid>
         <Card className={this.props.classes.card} justify="center">
           <CardHeader
@@ -128,44 +127,44 @@ class ApplicantProfileDisplay extends React.Component{
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Grid container spacing={24}>
-              <form className={this.props.classes.container} noValidate autoComplete="off" onSubmit={e => this.props.clientEditJobProfile(e, app.id, this.props.selectedJob.id)}>
-                <TextField
-                  id="filled-multiline-static"
-                  label="Comments"
-                  multiline
-                  rows="4"
-                  defaultValue={app.comments}
-                  className={this.props.classes.textField}
-                  margin="normal"
-                  variant="filled"
-                />
-                <TextField
-                  id="filled-number"
-                  label="Score"
-                  defaultValue={app.score}
-                  onChange={this.handleChange("score")}
-                  type="number"
-                  className={this.props.classes.textField}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  margin="normal"
-                  variant="filled"
-                />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={this.props.classes.submit}
-                >
-                  Submit Change
-                </Button>
-              </form>
-            </Grid>
+              <Grid item xs={6}>
+                <form className={this.props.classes.container} noValidate autoComplete="off" onSubmit={e => this.props.clientEditJobProfile(e, app.id, this.props.selectedJob.id)}>
+                  <TextField
+                    id="filled-multiline-static"
+                    label="Comments"
+                    multiline
+                    rows="4"
+                    defaultValue={app.comments}
+                    className={this.props.classes.textField}
+                    margin="normal"
+                    variant="filled"
+                  />
+                  <TextField
+                    id="filled-number"
+                    label="Score"
+                    defaultValue={app.score}
+                    onChange={this.handleChange("score")}
+                    type="number"
+                    className={this.props.classes.textField}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                    variant="filled"
+                  />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={this.props.classes.submit}
+                  >
+                    Submit Change
+                  </Button>
+                </form>
+              </Grid>
             </CardContent>
           </Collapse>
-        </Card>
+          </Card>
       </Grid>
     )
   }
