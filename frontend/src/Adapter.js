@@ -20,9 +20,6 @@ class Adapter {
   }
 
   static async createNewJobApp(job_profile_id, job_id) {
-    // debugger
-    // const job_profile_id = user.user.job_profiles[0].id
-
     let result = await fetch('http://localhost:3001/job_apps', {
       method: "POST",
       headers: {
@@ -60,7 +57,7 @@ class Adapter {
   }
 
   static async createNewJobProfile(args) {
-    const {user_id, name, phone, home_zip, travel_radius, experience, min_wage_rate} = args
+    const {user_id, name, phone, home_zip, travel_radius, experience, min_wage_rate, position_type} = args
 
     let result = await fetch('http://localhost:3001/job_profiles', {
       method: "POST",
@@ -76,7 +73,8 @@ class Adapter {
           home_zip,
           travel_radius,
           experience,
-          min_wage_rate
+          min_wage_rate,
+          position_type
         }
       })
     })

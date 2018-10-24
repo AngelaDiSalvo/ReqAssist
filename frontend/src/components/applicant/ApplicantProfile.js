@@ -10,7 +10,7 @@ const ApplicantProfile = ({applicantProfile}) => {
       phone: {profile.phone} <br />
       home zip: {profile.home_zip} <br />
       maximum travel radius: {profile.travel_radius}miles <br />
-      position type: {profile.position_type} <br />
+      position type: {profile.position_type.map( type => `${type}, `)} <br />
       minimum hourly rate: ${profile.min_wage_rate} <br />
       <br />
       <br />

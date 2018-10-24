@@ -27,10 +27,21 @@ import Menu from '@material-ui/core/Menu';
 
 import { connect } from 'react-redux'
 
+
+const StyledAppBar = withStyles({
+  root: {
+    background: '#36151e',
+    color: 'white',
+  },
+})(AppBar);
+
+const StyledFCL = withStyles({
+  root: {
+    color: 'white',
+  },
+})(FormControlLabel);
+
 const styles = {
-  // root: {
-  //   flexGrow: 1,
-  // },
   grow: {
     flexGrow: 1,
   },
@@ -67,18 +78,18 @@ class MenuAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <FormGroup>
-          <FormControlLabel
+          <StyledFCL
             control={
               <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
             }
             label={auth ? 'Logout' : 'Login'}
           />
         </FormGroup>
-        <AppBar position="static">
+        <StyledAppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+            {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {this.props.user.email}
             </Typography>
@@ -89,7 +100,7 @@ class MenuAppBar extends React.Component {
               </div>
             )}
           </Toolbar>
-        </AppBar>
+        </StyledAppBar>
       </div>
     );
   }

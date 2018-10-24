@@ -21,6 +21,7 @@ class JobProfilesController < ApplicationController
   def create
     if current_user.user_type == "applicant"
       job_profile = JobProfile.new(job_profile_params)
+      byebug
 
       if job_profile.valid?
         job_profile.save
@@ -43,7 +44,7 @@ class JobProfilesController < ApplicationController
   private
 
   def job_profile_params
-    params.require(:job_profile).permit(:user_id, :name, :phone, :home_zip, :travel_radius, :position_type, :experience, :min_wage_rate, :score, :comments)
+    params.require(:job_profile).permit(:user_id, :name, :phone, :home_zip, :travel_radius, :experience, :min_wage_rate, :score, :comments, position_type: [])
   end
 
 end

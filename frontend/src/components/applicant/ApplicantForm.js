@@ -20,7 +20,7 @@ class ApplicantForm extends React.Component {
       travel_radius: e.target[3].value,
       experience: e.target[4].value,
       min_wage_rate: e.target[5].value,
-      // position_type: position_types,
+      position_type: position_types,
     })
 
   }

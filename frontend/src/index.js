@@ -11,7 +11,6 @@ import {BrowserRouter} from 'react-router-dom';
 const JOBS_URL = 'http://localhost:3001/jobs'
 const APPLICANTS_URL = 'http://localhost:3001/users'
 
-
 const reducer = function(currentState , action = {}){
   let { type, payload } = action
   let newState = { ...currentState }
