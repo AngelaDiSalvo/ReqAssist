@@ -67,8 +67,7 @@ class EmployerJobForm extends React.Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault()
-
+    // e.preventDefault()
     Adapter.createNewJob({
       company_name: e.target[0].value,
       phone: e.target[1].value,
