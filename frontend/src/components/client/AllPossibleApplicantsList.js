@@ -119,7 +119,7 @@ EnhancedTableHead.propTypes = {
 const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit,
-    background: 'linear-gradient(to right, rgba(89, 63, 98, 1), rgba(123, 109, 141, 1), rgba(132, 153, 177, 1), rgba(165, 196, 212, 1))',
+    background: 'linear-gradient(to right, #9dd9d2, #79bcb8, #508991, #2ca6a4)',
   },
   highlight:
     theme.palette.type === 'light'

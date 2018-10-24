@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import '../../index.css';
 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -45,7 +46,7 @@ const drawerWidth = 400;
 
 const StyledAppBar = withStyles({
   root: {
-    background: '#36151e',
+    background: '#508991',
     color: 'white',
   },
 })(AppBar);
@@ -82,7 +83,8 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    background: '#e8e4ff'
+    background: '#ddfff7'
+    // background: '#e8e4ff'
   },
   drawerHeader: {
     display: 'flex',
@@ -90,6 +92,7 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    color: 'black'
   },
   content: {
     flexGrow: 1,

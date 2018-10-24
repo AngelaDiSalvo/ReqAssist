@@ -28,16 +28,28 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
+const StyledButton = withStyles({
+  root: {
+    background: 'linear-gradient(to left, #9dd9d2, #79bcb8, #508991, #2ca6a4)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    // padding: '0 30px',
+  }
+})(Button);
+
 const styles = theme => ({
   card: {
-    maxWidth: 600,
-    minWidth: 600,
-    background: '#e8e4ff'
+    maxWidth: 500,
+    minWidth: 500,
+    background: '#ddfff7'
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    verticalAlign: 'middle',
+    // width: 450,
   },
   media: {
     height: 0,
@@ -127,12 +139,13 @@ class ApplicantProfileDisplay extends React.Component{
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Grid item xs={6}>
+              {/* <Grid item xs={3}> */}
                 <form className={this.props.classes.container} noValidate autoComplete="off" onSubmit={e => this.props.clientEditJobProfile(e, app.id, this.props.selectedJob.id)}>
                   <TextField
                     id="filled-multiline-static"
                     label="Comments"
                     multiline
+                    fullWidth
                     rows="4"
                     defaultValue={app.comments}
                     className={this.props.classes.textField}
@@ -152,16 +165,16 @@ class ApplicantProfileDisplay extends React.Component{
                     margin="normal"
                     variant="filled"
                   />
-                  <Button
+                  <StyledButton
                     type="submit"
                     variant="contained"
                     color="primary"
                     className={this.props.classes.submit}
                   >
                     Submit Change
-                  </Button>
+                  </StyledButton>
                 </form>
-              </Grid>
+              {/* </Grid> */}
             </CardContent>
           </Collapse>
           </Card>

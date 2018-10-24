@@ -8,6 +8,18 @@ import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+
+const theme = createMuiTheme({
+  palette: {
+    background: {
+          paper: '#ddfff7',
+        },
+    // text: 'light',
+  },
+});
+
 const JOBS_URL = 'http://localhost:3001/jobs'
 const APPLICANTS_URL = 'http://localhost:3001/users'
 
@@ -28,8 +40,6 @@ const reducer = function(currentState , action = {}){
       newState.jobs = payload.jobs
     break
     case 'REPLACE_JOB':
-      console.log(payload);
-      console.log(action.payload);
       const allJobsExceptOne = currentState.jobs.filter(job => {
         return job.id != action.payload.job.id
       })
@@ -140,7 +150,9 @@ const store = createStore(
 
 ReactDOM.render((
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
   </Provider>
   ), document.getElementById('root'));
 

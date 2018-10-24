@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 const ApplicantProfile = ({applicantProfile}) => {
   const profile = applicantProfile.job_profiles[0]
-  console.log(profile)
   return (
     <div className='ApplicantProfile'>
       name: {profile.name} <br />

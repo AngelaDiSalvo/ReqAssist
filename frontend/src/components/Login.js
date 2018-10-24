@@ -17,7 +17,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 const StyledButton = withStyles({
   root: {
-    background: 'linear-gradient(to left, rgba(89, 63, 98, 1), rgba(123, 109, 141, 1), rgba(132, 153, 177, 1), rgba(165, 196, 212, 1))',
+    background: 'linear-gradient(to left, #9dd9d2, #79bcb8, #508991, #2ca6a4)',
     borderRadius: 3,
     border: 0,
     color: 'white',
@@ -51,7 +51,7 @@ const styles = theme => ({
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#79bcb8',
   },
   form: {
     width: '100%', // Fix IE11 issue.
@@ -73,7 +73,7 @@ const Login = (props) => {
             <LockIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            ReqAssist Sign in
           </Typography>
           <form className={props.classes.form} onSubmit={e => props.handleLogin(e)}>
             <FormControl margin="normal" required fullWidth>
@@ -96,7 +96,7 @@ const Login = (props) => {
               color="primary"
               className={props.classes.submit}
             >
-              Sign in
+              SIGN IN
             </StyledButton>
           </form>
         </Paper>

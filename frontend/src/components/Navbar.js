@@ -30,7 +30,7 @@ import { connect } from 'react-redux'
 
 const StyledAppBar = withStyles({
   root: {
-    background: '#36151e',
+    background: '#508991',
     color: 'white',
   },
 })(AppBar);

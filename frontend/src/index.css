@@ -6,12 +6,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to right, rgba(89, 63, 98, 1),
-  rgba(123, 109, 141, 1),
-  rgba(132, 153, 177, 1),
-  rgba(165, 196, 212, 1));
 
-  color: white;
+  background-image: linear-gradient(to right, #9dd9d2, #79bcb8, #508991, #2ca6a4);
+  /* background-image: url("./pics/IMG_1963.jpeg"); */
+  background-size: cover;
+
 }
 
 code {
@@ -25,7 +24,7 @@ code {
 }
 
 .container div {
-  width: 49vw;
+  /* width: 49vw; */
   text-align: center;
   align-items: center;
   justify-content: center;

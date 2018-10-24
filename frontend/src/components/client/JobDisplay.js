@@ -16,7 +16,7 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-    background: '#e8e4ff'
+    background: '#ddfff7'
   },
   table: {
     minWidth: 300,
@@ -24,6 +24,7 @@ const styles = theme => ({
 });
 
 const JobDisplay = (props) => {
+  console.log(props.selectedJob);
   return (
     <Paper className={props.classes.root}>
       <Table className={props.classes.table}>
@@ -31,29 +32,34 @@ const JobDisplay = (props) => {
           <TableRow>
             <TableCell>Job Details</TableCell>
             <TableCell> </TableCell>
+            <TableCell> </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>Job Id:</TableCell>
-            <TableCell>{props.selectedJob.id}</TableCell>
+            <TableCell>Job Id: {props.selectedJob.id}</TableCell>
+            <TableCell>Company Name: <strong>{props.selectedJob.company_name}</strong></TableCell>
+            <TableCell>Position: <strong>{props.selectedJob.position}</strong></TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Status:</TableCell>
-            <TableCell>{props.selectedJob.job_status.status}</TableCell>
+            <TableCell>Status: {props.selectedJob.job_status.status}</TableCell>
+            <TableCell>Email: {props.selectedJob.user.email}</TableCell>
+            <TableCell>Phone: {props.selectedJob.phone}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <Table className={props.classes.table}>
+        <TableBody>
+          <TableRow>
+            <TableCell>Position Description: <strong>{props.selectedJob.position_description}</strong></TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Email:</TableCell>
-            <TableCell>{props.selectedJob.user.email}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Phone:</TableCell>
-            <TableCell>{props.selectedJob.phone}</TableCell>
+            <TableCell>Requirements: <strong>{props.selectedJob.requirements}</strong></TableCell>
           </TableRow>
         </TableBody>
       </Table>
 
-      <Table className={props.classes.table2}>
+      <Table className={props.classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>Selected Candidates</TableCell>

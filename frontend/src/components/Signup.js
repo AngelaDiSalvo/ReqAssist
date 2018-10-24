@@ -19,7 +19,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 
 const StyledButton = withStyles({
   root: {
-    background: 'linear-gradient(to left, rgba(89, 63, 98, 1), rgba(123, 109, 141, 1), rgba(132, 153, 177, 1), rgba(165, 196, 212, 1))',
+    background: 'linear-gradient(to left, #9dd9d2, #79bcb8, #508991, #2ca6a4)',
     borderRadius: 3,
     border: 0,
     color: 'white',
