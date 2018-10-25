@@ -1,6 +1,6 @@
 import React from 'react'
 import Signup from "./Signup"
-import Login from "./Login"
+// import Login from "./Login"
 import { connect } from 'react-redux'
 import {Route, Switch, NavLink, Redirect, withRouter} from 'react-router-dom';
 import engineer from '../pics/engineer.svg'
@@ -12,6 +12,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockIcon from '@material-ui/icons/LockOutlined';
 
 const StyledButton = withStyles({
   root: {
@@ -44,14 +51,21 @@ const styles = theme => ({
     alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: '#79bcb8',
+  },
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
   submit: {
     marginTop: theme.spacing.unit * 3,
   },
 });
 
-
 const Homepage = (props) => {
-  if (props.toggleSignUp === false && props.toggleLogin === false) {
+  if (props.toggleSignUp === false) {
     return (
       <React.Fragment>
         <CssBaseline />
@@ -61,6 +75,28 @@ const Homepage = (props) => {
             <Typography component="h1" variant="h5">
               Welcome to ReqAssist
             </Typography>
+            <form className={props.classes.form} onSubmit={e => props.handleLogin(e)}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <Input id="email" name="email" autoComplete="email" autoFocus />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </FormControl>
+              <StyledButton
+                type="submit"
+                fullWidth
+                variant="contained"
+                className={props.classes.submit}
+              >
+                Sign In
+              </StyledButton>
               <StyledButton
                 type="submit"
                 fullWidth
@@ -70,15 +106,7 @@ const Homepage = (props) => {
               >
                 Sign Up
               </StyledButton>
-              <StyledButton
-                type="submit"
-                fullWidth
-                variant="contained"
-                className={props.classes.submit}
-                onClick={e => props.loginRedirect(e)}
-              >
-                Sign In
-              </StyledButton>
+            </form>
           </Paper>
         </main>
       </React.Fragment>
@@ -89,28 +117,49 @@ const Homepage = (props) => {
           <Signup submitCredentials={props.submitCredentials}/>
         </div>
       )
-    } else if (props.toggleLogin === true) {
-      return (
-        <div>
-          <Login handleLogin={props.handleLogin}/>
-        </div>
-      )
     }
 
 }
 
+function handleLogin(e, dispatch) {
+  e.preventDefault()
+  let email = e.target[0].value
+  let password = e.target[1].value
+
+  fetch('http://localhost:3001/login', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      user: {
+        email,
+        password
+      }
+    })
+  })
+  .then(resp => resp.json())
+  .then(data_with_token => {
+    if (!!data_with_token.jwt) {
+      localStorage.token = data_with_token.jwt;
+      dispatch({type: "SET_USER", payload: data_with_token.user})
+    } else {
+      localStorage.token = "undefined"
+    }
+  })
+
+}
 
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.isLoggedIn,
     toggleSignUp: state.toggleSignUp,
-    toggleLogin: state.toggleLogin,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loginRedirect: (e) => dispatch({ type: 'LOGIN_REDIRECT'} ),
+    handleLogin: (e) => (handleLogin(e, dispatch)),
     signUpRedirect: (e) => dispatch({ type: 'SIGNUP_REDIRECT'} )
   }
 }

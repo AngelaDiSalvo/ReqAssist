@@ -1,5 +1,25 @@
 class Adapter {
 
+
+  // static async loginUser(args) {
+  //   const {email, password} = args
+  //
+  //   let result = await fetch('http://localhost:3001/loginUser', {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": `Bearer ${localStorage.token}`
+  //     },
+  //     body: JSON.stringify({
+  //       user: {
+  //         email,
+  //         password
+  //       }
+  //     })
+  //   })
+  //   return result
+  // }
+
   static async createNewUser(args) {
     const {user_type, email, password} = args
 

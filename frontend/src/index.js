@@ -54,14 +54,14 @@ const reducer = function(currentState , action = {}){
       newState.selectedApplicant = payload
       newState.is_job_profile_expanded = false
     break;
-    case "SET_USER":
+    case 'SET_USER':
       newState.user = payload
       if (localStorage.token !== "undefined") {
         newState.isLoggedIn = true
       }
-    case 'LOGIN_REDIRECT':
-      newState.toggleLogin = true
-    break;
+    // case 'LOGIN_REDIRECT':
+    //   newState.toggleLogin = true
+    // break;
     case 'SIGNUP_REDIRECT':
       newState.toggleSignUp = true
     break;
@@ -71,6 +71,28 @@ const reducer = function(currentState , action = {}){
         email: payload.email,
         password: payload.password
       })
+      // .then(fetch('http://localhost:3001/login', {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({
+      //     user: {
+      //       email: payload.email,
+      //       password: payload.password
+      //     }
+      //   })
+      // }))
+      // .then(resp => resp.json())
+      // .then(data_with_token => {
+      //   debugger
+      //   if (!!data_with_token.jwt) {
+      //     localStorage.token = data_with_token.jwt;
+      //     store.dispatch({type: "SET_USER", payload: data_with_token.user})
+      //   } else {
+      //     localStorage.token = "undefined"
+      //   }
+      // })
     break;
     case 'FETCH_APPLICANT_PROFILE':
       let USER_URL = APPLICANTS_URL + `/${action.payload}`

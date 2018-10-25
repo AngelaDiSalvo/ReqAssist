@@ -40,10 +40,10 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   tablecell1: {
-    fontSize: '12pt',
+    fontSize: '11pt',
   },
   tablecell2: {
-    fontSize: '16pt',
+    fontSize: '15pt',
   },
   pos: {
     marginBottom: 12,
@@ -52,6 +52,7 @@ const styles = theme => ({
 
 const ApplicantProfile = (props) => {
   const profile = props.applicantProfile.job_profiles[0]
+  console.log(props);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -75,6 +76,9 @@ const ApplicantProfile = (props) => {
                   </TableHead>
                   <TableBody>
                     <TableRow>
+                      <TableCell className={props.classes.tablecell1}>email</TableCell>
+                      <TableCell className={props.classes.tablecell2}>{props.applicantProfile.email}</TableCell>
+                    </TableRow><TableRow>
                       <TableCell className={props.classes.tablecell1}>phone</TableCell>
                       <TableCell className={props.classes.tablecell2}>{profile.phone}</TableCell>
                     </TableRow>
@@ -84,13 +88,16 @@ const ApplicantProfile = (props) => {
                     </TableRow>
                     <TableRow>
                       <TableCell className={props.classes.tablecell1}>travel radius</TableCell>
-                      <TableCell className={props.classes.tablecell2}>{profile.travel_radius}</TableCell>
+                      <TableCell className={props.classes.tablecell2}>{profile.travel_radius}mi</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className={props.classes.tablecell1}>position type</TableCell>
                       <TableCell className={props.classes.tablecell2}>{profile.position_type.map( type => `${type}, `)}</TableCell>
                     </TableRow>
                     <TableRow>
+                      <TableCell className={props.classes.tablecell1}>years of experience</TableCell>
+                      <TableCell className={props.classes.tablecell2}>{profile.experience}yrs</TableCell>
+                    </TableRow><TableRow>
                       <TableCell className={props.classes.tablecell1}>minimum hourly rate ($/hr)</TableCell>
                       <TableCell className={props.classes.tablecell2}>{profile.min_wage_rate}</TableCell>
                     </TableRow>
