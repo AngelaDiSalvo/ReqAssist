@@ -40,6 +40,7 @@ function stableSort(array, cmp) {
     if (order !== 0) return order;
     return a[1] - b[1];
   });
+
   return stabilizedThis.map(el => el[0]);
 }
 
@@ -52,10 +53,10 @@ const rows = [
   { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
   { id: 'score', numeric: true, disablePadding: false, label: 'Score' },
   { id: 'home_zip', numeric: true, disablePadding: false, label: 'Home Zip' },
-  { id: 'travel_distance', numeric: true, disablePadding: false, label: 'Travel Distance' },
+  { id: 'travel_radius', numeric: true, disablePadding: false, label: 'Travel Distance' },
   { id: 'position_type', numeric: true, disablePadding: false, label: 'Position Type' },
   { id: 'experience', numeric: true, disablePadding: false, label: 'Experience' },
-  { id: 'hourRate', numeric: true, disablePadding: false, label: 'Hourly Rate' },
+  { id: 'min_wage_rate', numeric: true, disablePadding: false, label: 'Hourly Rate' },
   { id: 'date', numeric: true, disablePadding: false, label: 'Profile Submit Date' },
 ];
 
@@ -192,6 +193,7 @@ const styles = theme => ({
     // marginTop: theme.spacing.unit * 3,
   },
   table: {
+    margin: theme.spacing.unit,
     minWidth: 1020,
   },
   tablecell: {

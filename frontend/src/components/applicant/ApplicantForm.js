@@ -49,10 +49,18 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     minWidth: 120,
     maxWidth: 300,
+    background: 'white',
+    borderRadius: '3px',
   },
   noLabel: {
     marginTop: theme.spacing.unit * 3,
   },
+  textField: {
+    background: 'white',
+    margin: theme.spacing.unit,
+    padding: '6px 6px 0px',
+    borderRadius: '3px'
+  }
 })
 
 const types = [
@@ -128,20 +136,22 @@ class ApplicantForm extends React.Component {
         </Grid>
         <Grid item xs={3}>
           <TextField
+            className={this.props.classes.textField}
             required
             id="name"
             name="name"
-            label="Name"
+            label="name"
             fullWidth
             autoComplete="name"
           />
         </Grid>
         <Grid item xs={3}>
           <TextField
+            className={this.props.classes.textField}
             required
             id="phone"
             name="phone"
-            label="Phone"
+            label="phone"
             fullWidth
             autoComplete="phone"
           />
@@ -152,10 +162,11 @@ class ApplicantForm extends React.Component {
         </Grid>
         <Grid item xs={3}>
           <TextField
+            className={this.props.classes.textField}
             required
             id="zip"
             name="zip"
-            label="Zip / Postal code"
+            label="zip / postal code"
             fullWidth
             autoComplete="billing postal-code"
           />
@@ -163,9 +174,10 @@ class ApplicantForm extends React.Component {
         <Grid item xs={3}>
           <TextField
             id="travel_radius"
+            className={this.props.classes.textField}
             select
             fullWidth
-            label="Travel Radius"
+            label="travel radius"
             SelectProps={{
               native: true,
             }}
@@ -174,7 +186,6 @@ class ApplicantForm extends React.Component {
             <option key="5" value="10">10 miles</option>
             <option key="5" value="25">25 miles</option>
             <option key="5" value="50">50 miles</option>
-            ))}
           </TextField>
         </Grid>
         <Grid item xs={3}>
@@ -184,19 +195,20 @@ class ApplicantForm extends React.Component {
         <Grid item xs={3}>
 
           <TextField
+            className={this.props.classes.textField}
             id="experience"
             label="years of experience"
             onChange={this.handleChange("experience")}
             type="number"
-            InputLabelProps={{
-              shrink: true
-            }}
-            margin="normal"
-            variant="filled"
+            // InputLabelProps={{
+            //   shrink: true
+            // }}
+            // margin="normal"
+            // variant="filled"
           />
         </Grid>
         <Grid item xs={3}>
-          <TextField id="wage" name="wage" label="Requested Wage ($/hr)" fullWidth />
+          <TextField className={this.props.classes.textField} id="wage" name="wage" label="Requested Wage ($/hr)" fullWidth />
         </Grid>
         <Grid item xs={3}>
         </Grid>

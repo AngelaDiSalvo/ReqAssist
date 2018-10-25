@@ -17,7 +17,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 const StyledButton = withStyles({
   root: {
@@ -54,6 +53,13 @@ const styles = theme => ({
   noLabel: {
     marginTop: theme.spacing.unit * 3,
   },
+  textField: {
+    background: 'white',
+    margin: theme.spacing.unit,
+    padding: '6px 6px 0px',
+    borderRadius: '3px',
+  }
+
 })
 
 
@@ -112,20 +118,62 @@ class EmployerJobForm extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <Grid container spacing={24}>
             <Grid item xs={3}>
-              <label>Company Name</label><input />
+              <TextField
+                className={this.props.classes.textField}
+                required
+                id="company_name"
+                name="company_name"
+                label="company name"
+                fullWidth
+                autoComplete="company name"
+              />
             </Grid>
             <Grid item xs={3}>
-              <label>Phone</label><input />
+              <TextField
+                className={this.props.classes.textField}
+                required
+                id="phone"
+                name="phone"
+                label="phone"
+                fullWidth
+                autoComplete="phone"
+              />
             </Grid>
             <Grid item xs={3}>
-              <label>Job Zip</label><input />
+              <TextField
+                className={this.props.classes.textField}
+                required
+                id="zip"
+                name="zip"
+                label="job zip code"
+                fullWidth
+                autoComplete="postal-code"
+              />
             </Grid>
             <Grid item xs={3}>
-              <FormControl variant="outlined" className={this.props.classes.formControl}>
-                <label>
+              <TextField
+                id="position_type"
+                className={this.props.classes.textField}
+                select
+                fullWidth
+                required
+                label="position type"
+                SelectProps={{
+                  native: true,
+                }}
+                margin="normal"
+              >
+                {types.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+
+              </TextField>
+
+              {/* <FormControl variant="outlined" className={this.props.classes.formControl}> */}
+                {/* <label>
                   Position
-                </label>
-                <Select
+                </label> */}
+                {/* <Select
                   value={this.state.type}
                   onChange={this.handleChange}
                 >
@@ -133,35 +181,41 @@ class EmployerJobForm extends React.Component {
                     <MenuItem value={type}>{type}</MenuItem>
                   ))}
                 </Select>
-                {/* <label>Position Category</label> <select>
-                  <option value="construction">construction</option>
-                  <option value="electrician">electrician</option>
-                  <option value="HVAC">HVAC</option>
-                  <option value="tiling">tiling</option>
-                  <option value="roofing">roofing</option>
-                  <option value="plumbing">plumbing</option>
-                  <option value="manufacturing">manufacturing</option>
-                  <option value="sanitation">sanitation</option>
-                  <option value="custodial">custodial</option>
-                  <option value="mining">mining</option>
-                  <option value="warehousing">warehousing</option>
-                  <option value="commercial fishing">commercial fishing</option>
-                  <option value="oil field work">oil field work</option>
-                  <option value="waste disposal">waste disposal</option>
-                  <option value="mechanic">mechanic</option>
-                  <option value="maintenance">maintenance</option>
-                  <option value="recycling">recycling</option>
-                </select> <br /> */}
-              </FormControl>
+
+              </FormControl> */}
             </Grid>
             <Grid item xs={3}>
-              <label>Position Description</label><input />
+              <TextField
+                className={this.props.classes.textField}
+                required
+                id="position_description"
+                name="position_description"
+                label="position description"
+                fullWidth
+                autoComplete="position description"
+              />
             </Grid>
             <Grid item xs={3}>
-              <label>Requirements</label><input />
+              <TextField
+                className={this.props.classes.textField}
+                required
+                id="requirements"
+                name="requirements"
+                label="requirements"
+                fullWidth
+                autoComplete="requirements"
+              />
             </Grid>
             <Grid item xs={3}>
-              <label>Comments</label><input />
+              <TextField
+                className={this.props.classes.textField}
+                required
+                id="comments"
+                name="comments"
+                label="comments"
+                fullWidth
+                autoComplete="comments"
+              />
             </Grid>
             {/* Experience Required: <select>
               <option value="0">new hire</option>
