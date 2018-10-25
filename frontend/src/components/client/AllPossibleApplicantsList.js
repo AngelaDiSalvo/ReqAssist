@@ -194,6 +194,9 @@ const styles = theme => ({
   table: {
     minWidth: 1020,
   },
+  tablecell: {
+    fontSize: '12pt',
+  },
   tableWrapper: {
     overflowX: 'auto',
   },
@@ -303,14 +306,14 @@ class AllPossibleApplicantsList extends React.Component {
                         <TableCell component="th" scope="row" padding="none">
                           {n.id}
                         </TableCell>
-                        <TableCell numeric>{n.name}</TableCell>
-                        <TableCell numeric>{n.score}</TableCell>
-                        <TableCell numeric>{n.home_zip}</TableCell>
-                        <TableCell numeric>{n.travel_radius}</TableCell>
-                        <TableCell numeric>{n.position_type.map(pos => `${pos}, `)}</TableCell>
-                        <TableCell numeric>{n.experience}</TableCell>
-                        <TableCell numeric>{n.min_wage_rate}</TableCell>
-                        <TableCell numeric>{n.updated_at.slice(0,10)}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.name}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.score}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.home_zip}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.travel_radius}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.position_type.map(pos => `${pos}, `)}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.experience}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.min_wage_rate}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.updated_at.slice(0,10)}</TableCell>
                       </TableRow>
                     );
                   })}

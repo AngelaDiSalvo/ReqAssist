@@ -21,6 +21,9 @@ const styles = theme => ({
   table: {
     minWidth: 300,
   },
+  tablecell: {
+    fontSize: '12pt',
+  },
 });
 
 const JobDisplay = (props) => {
@@ -37,24 +40,24 @@ const JobDisplay = (props) => {
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>Job Id: {props.selectedJob.id}</TableCell>
-            <TableCell>Company Name: <strong>{props.selectedJob.company_name}</strong></TableCell>
-            <TableCell>Position: <strong>{props.selectedJob.position}</strong></TableCell>
+            <TableCell className={props.classes.tablecell}>Job Id: {props.selectedJob.id}</TableCell>
+            <TableCell className={props.classes.tablecell}>Company Name: <strong>{props.selectedJob.company_name}</strong></TableCell>
+            <TableCell className={props.classes.tablecell}>Position: <strong>{props.selectedJob.position}</strong></TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Status: {props.selectedJob.job_status.status}</TableCell>
-            <TableCell>Email: {props.selectedJob.user.email}</TableCell>
-            <TableCell>Phone: {props.selectedJob.phone}</TableCell>
+            <TableCell className={props.classes.tablecell}>Status: {props.selectedJob.job_status.status}</TableCell>
+            <TableCell className={props.classes.tablecell}>Email: {props.selectedJob.user.email}</TableCell>
+            <TableCell className={props.classes.tablecell}>Phone: {props.selectedJob.phone}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
       <Table className={props.classes.table}>
         <TableBody>
           <TableRow>
-            <TableCell>Position Description: <strong>{props.selectedJob.position_description}</strong></TableCell>
+            <TableCell className={props.classes.tablecell}>Position Description: <strong>{props.selectedJob.position_description}</strong></TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Requirements: <strong>{props.selectedJob.requirements}</strong></TableCell>
+            <TableCell className={props.classes.tablecell}>Requirements: <strong>{props.selectedJob.requirements}</strong></TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -62,23 +65,23 @@ const JobDisplay = (props) => {
       <Table className={props.classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Selected Candidates</TableCell>
-            <TableCell> </TableCell>
-            <TableCell> </TableCell>
+            <TableCell className={props.classes.tablecell}>Selected Candidates</TableCell>
+            <TableCell className={props.classes.tablecell}> </TableCell>
+            <TableCell className={props.classes.tablecell}> </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Applicant Id</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Score</TableCell>
+            <TableCell className={props.classes.tablecell}>Applicant Id</TableCell>
+            <TableCell className={props.classes.tablecell}>Name</TableCell>
+            <TableCell className={props.classes.tablecell}>Score</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.selectedJob.job_profiles.map(applicant => {
             return (
               <TableRow hover key={applicant.id} onClick={() => props.selectApplicant(applicant)}>
-                <TableCell>{applicant.id}</TableCell>
-                <TableCell>{applicant.name}</TableCell>
-                <TableCell>{applicant.score}</TableCell>
+                <TableCell className={props.classes.tablecell}>{applicant.id}</TableCell>
+                <TableCell className={props.classes.tablecell}>{applicant.name}</TableCell>
+                <TableCell className={props.classes.tablecell}>{applicant.score}</TableCell>
               </TableRow>
             )})}
         </TableBody>

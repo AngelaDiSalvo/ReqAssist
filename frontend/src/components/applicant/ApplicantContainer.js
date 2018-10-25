@@ -24,9 +24,6 @@ class ApplicantContainer extends React.Component{
       } else {
         return (
           <div className='ApplicantContainer'>
-            Welcome {this.props.applicantProfile.job_profiles[0].name}
-            <br></br>
-            Here's your profile on file
             <ApplicantProfile />
           </div>
         )

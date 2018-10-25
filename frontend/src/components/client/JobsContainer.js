@@ -3,6 +3,8 @@ import JobDisplay from './JobDisplay'
 import ApplicantProfileDisplay from './ApplicantProfileDisplay'
 import AllPossibleApplicantsList from './AllPossibleApplicantsList'
 
+import Grid from '@material-ui/core/Grid';
+
 import { connect } from 'react-redux'
 
 class JobsContainer extends React.Component {
@@ -18,7 +20,7 @@ class JobsContainer extends React.Component {
             <JobDisplay/>
           : null}
         {this.props.selectedJob && this.props.selectedApplicant ?
-          <ApplicantProfileDisplay/> : null}
+          <ApplicantProfileDisplay/> : <Grid container></Grid>}
       </div>
     )
   }

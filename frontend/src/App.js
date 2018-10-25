@@ -35,7 +35,6 @@ class App extends Component {
     }
   }
 
-
   render() {
     if (this.props.isLoggedIn && this.props.user && this.props.user.user_type === "client") {
       return (
@@ -61,7 +60,6 @@ class App extends Component {
     if (this.props.isLoggedIn && this.props.user && this.props.user.user_type === "applicant") {
       return (
         <div className="App">
-          <CssBaseline />
           <Navbar />
           <div className="App-intro">
             <ApplicantContainer />

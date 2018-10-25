@@ -12,20 +12,19 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const StyledButton = withStyles({
@@ -81,6 +80,9 @@ const styles = theme => ({
   submit: {
     marginTop: theme.spacing.unit * 3,
   },
+  tablecell: {
+    fontSize: '12pt',
+  },
 });
 
 class ApplicantProfileDisplay extends React.Component{
@@ -111,15 +113,40 @@ class ApplicantProfileDisplay extends React.Component{
             subheader={`phone: ${app.phone}, SCORE: ${app.score}`}
           />
           <CardContent>
-            <Typography component="p">
-              position type(s): {app.position_type.map(item => `${item}, `)}<br />
-              experience: {app.experience}yrs<br />
-              hourly rate: ${app.min_wage_rate}<br />
-              zip: {app.home_zip}<br />
-              travel distance: {app.travel_radius}miles<br />
-              profile date: {app.updated_at.slice(0,10)}<br />
-              <strong>admin comments: {app.comments}</strong>
-            </Typography>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={this.props.classes.tablecell}>name</TableCell>
+                  <TableCell className={this.props.classes.tablecell}>{app.name}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell className={this.props.classes.tablecell}>phone</TableCell>
+                  <TableCell className={this.props.classes.tablecell}>{app.phone}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={this.props.classes.tablecell}>zip</TableCell>
+                  <TableCell className={this.props.classes.tablecell}>{app.home_zip}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={this.props.classes.tablecell}>travel radius</TableCell>
+                  <TableCell className={this.props.classes.tablecell}>{app.travel_radius}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={this.props.classes.tablecell}>position type(s)</TableCell>
+                  <TableCell className={this.props.classes.tablecell}>{app.position_type.map( type => `${type}, `)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={this.props.classes.tablecell}>minimum hourly rate ($/hr)</TableCell>
+                  <TableCell className={this.props.classes.tablecell}>{app.min_wage_rate}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={this.props.classes.tablecell}>admin comments</TableCell>
+                  <TableCell className={this.props.classes.tablecell}>{app.comments}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </CardContent>
           <CardActions className={this.props.classes.actions} disableActionSpacing>
             <IconButton aria-label="Delete">
@@ -139,42 +166,40 @@ class ApplicantProfileDisplay extends React.Component{
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              {/* <Grid item xs={3}> */}
-                <form className={this.props.classes.container} noValidate autoComplete="off" onSubmit={e => this.props.clientEditJobProfile(e, app.id, this.props.selectedJob.id)}>
-                  <TextField
-                    id="filled-multiline-static"
-                    label="Comments"
-                    multiline
-                    fullWidth
-                    rows="4"
-                    defaultValue={app.comments}
-                    className={this.props.classes.textField}
-                    margin="normal"
-                    variant="filled"
-                  />
-                  <TextField
-                    id="filled-number"
-                    label="Score"
-                    defaultValue={app.score}
-                    onChange={this.handleChange("score")}
-                    type="number"
-                    className={this.props.classes.textField}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    margin="normal"
-                    variant="filled"
-                  />
-                  <StyledButton
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={this.props.classes.submit}
-                  >
-                    Submit Change
-                  </StyledButton>
-                </form>
-              {/* </Grid> */}
+              <form className={this.props.classes.container} noValidate autoComplete="off" onSubmit={e => this.props.clientEditJobProfile(e, app.id, this.props.selectedJob.id)}>
+                <TextField
+                  id="filled-multiline-static"
+                  label="Comments"
+                  multiline
+                  fullWidth
+                  rows="4"
+                  defaultValue={app.comments}
+                  className={this.props.classes.textField}
+                  margin="normal"
+                  variant="filled"
+                />
+                <TextField
+                  id="filled-number"
+                  label="Score"
+                  defaultValue={app.score}
+                  onChange={this.handleChange("score")}
+                  type="number"
+                  className={this.props.classes.textField}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  margin="normal"
+                  variant="filled"
+                />
+                <StyledButton
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={this.props.classes.submit}
+                >
+                  Submit Change
+                </StyledButton>
+              </form>
             </CardContent>
           </Collapse>
           </Card>
