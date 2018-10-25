@@ -313,7 +313,7 @@ class AllPossibleApplicantsList extends React.Component {
                         <TableCell className={this.props.classes.tablecell} numeric>{n.position_type.map(pos => `${pos}, `)}</TableCell>
                         <TableCell className={this.props.classes.tablecell} numeric>{n.experience}</TableCell>
                         <TableCell className={this.props.classes.tablecell} numeric>{n.min_wage_rate}</TableCell>
-                        <TableCell className={this.props.classes.tablecell} numeric>{n.updated_at.slice(0,10)}</TableCell>
+                        <TableCell className={this.props.classes.tablecell} numeric>{n.created_at.slice(0,10)}</TableCell>
                       </TableRow>
                     );
                   })}

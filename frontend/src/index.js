@@ -10,13 +10,11 @@ import {BrowserRouter} from 'react-router-dom';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-
 const theme = createMuiTheme({
   palette: {
     background: {
-          paper: '#ddfff7',
-        },
-    // text: 'light',
+      paper: '#ddfff7',
+    },
   },
 });
 
@@ -59,9 +57,6 @@ const reducer = function(currentState , action = {}){
       if (localStorage.token !== "undefined") {
         newState.isLoggedIn = true
       }
-    // case 'LOGIN_REDIRECT':
-    //   newState.toggleLogin = true
-    // break;
     case 'SIGNUP_REDIRECT':
       newState.toggleSignUp = true
     break;
@@ -71,28 +66,15 @@ const reducer = function(currentState , action = {}){
         email: payload.email,
         password: payload.password
       })
-      // .then(fetch('http://localhost:3001/login', {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({
-      //     user: {
-      //       email: payload.email,
-      //       password: payload.password
-      //     }
-      //   })
-      // }))
-      // .then(resp => resp.json())
-      // .then(data_with_token => {
-      //   debugger
-      //   if (!!data_with_token.jwt) {
-      //     localStorage.token = data_with_token.jwt;
-      //     store.dispatch({type: "SET_USER", payload: data_with_token.user})
-      //   } else {
-      //     localStorage.token = "undefined"
-      //   }
-      // })
+      .then(resp => resp.json())
+      .then(data_with_token => {
+        if (!!data_with_token.token) {
+          localStorage.token = data_with_token.token;
+          store.dispatch({type: "SET_USER", payload: data_with_token.user})
+        } else {
+          localStorage.token = ""
+        }
+      })
     break;
     case 'FETCH_APPLICANT_PROFILE':
       let USER_URL = APPLICANTS_URL + `/${action.payload}`

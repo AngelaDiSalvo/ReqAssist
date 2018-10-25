@@ -131,7 +131,7 @@ function mapDispatchToProps(dispatch) {
       } else {
         alert("Error: password must match");
       }
-      window.location.reload()
+      window.history.pushState({}, "", "/")
     }
   }
 }
