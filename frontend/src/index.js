@@ -89,6 +89,7 @@ const reducer = function(currentState , action = {}){
     case 'SET_APPLICANT_PROFILE':
       newState.applicantProfile = payload.user
       newState.isLoaded = true
+      window.history.pushState({}, "", "/")
     break
     case 'STORE_POSTED_JOBS':
       newState.postedJobs = payload.user.posted_jobs

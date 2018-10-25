@@ -88,10 +88,13 @@ function getStyles(types, that) {
 class ApplicantForm extends React.Component {
   state = {
     type: [],
+    experience: null,
   };
 
-  handleChange = event => {
-    this.setState({ type: event.target.value });
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
   };
 
   handleSubmit = (e) => {
@@ -110,9 +113,15 @@ class ApplicantForm extends React.Component {
   render() {
     return (
       <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Profile Form
-      </Typography>
+      <Grid container spacing={24}>
+        <Grid item xs={3}>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="h6" gutterBottom>
+            Profile Form
+          </Typography>
+        </Grid>
+      </Grid>
       <form onSubmit={this.handleSubmit}>
       <Grid container spacing={24}>
         <Grid item xs={3}>
@@ -173,22 +182,18 @@ class ApplicantForm extends React.Component {
         <Grid item xs={3}>
         </Grid>
         <Grid item xs={3}>
+
           <TextField
             id="experience"
-            select
-            fullWidth
-            label="Years of Experience"
-            SelectProps={{
-              native: true,
+            label="years of experience"
+            onChange={this.handleChange("experience")}
+            type="number"
+            InputLabelProps={{
+              shrink: true
             }}
             margin="normal"
-          >
-            <option value="1">0-1 year</option>
-            <option value="2">1-3 years</option>
-            <option value="3">3-5 years</option>
-            <option value="3">5-10 years</option>
-            ))}
-          </TextField>
+            variant="filled"
+          />
         </Grid>
         <Grid item xs={3}>
           <TextField id="wage" name="wage" label="Requested Wage ($/hr)" fullWidth />
@@ -203,7 +208,7 @@ class ApplicantForm extends React.Component {
           <Select
             multiple
             value={this.state.type}
-            onChange={this.handleChange}
+            onChange={this.handleChange("type")}
             input={<Input id="select-multiple-checkbox" />}
             renderValue={selected => selected.join(', ')}
             MenuProps={MenuProps}
